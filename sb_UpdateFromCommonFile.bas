@@ -1,10 +1,9 @@
 Attribute VB_Name = "sb_UpdateFromCommonFile"
 Option Explicit
-Const banner As String = "°øÅë±âÃÊÀÚ·á¾÷µ¥ÀÌÆ®"
+Const banner As String = "ê³µí†µê¸°ì´ˆìë£Œì—…ë°ì´íŠ¸"
 
 '---------------------------------------------------------------------
-'  °øÅëÆú´õÀÇ °øÅë±âÃÊÀÚ·á ÆÄÀÏÀ» ¿­¾î¼­ ÀÛ¾÷ ÆÄÀÏ ¾÷µ¥ÀÌÆ®
-'
+'  ê³µí†µí´ë”ì˜ ê³µí†µê¸°ì´ˆìë£Œ íŒŒì¼ì„ ì—´ì–´ì„œ ì‘ì—… íŒŒì¼ ì—…ë°ì´íŠ¸
 '---------------------------------------------------------------------
 Sub UpdateFromCommonFile()
 
@@ -16,29 +15,29 @@ On Error Resume Next
     Dim DB As Range
     Dim rawFOpen As Boolean
 
-    '//º¯¼ö Á¤ÀÇ
-    rawF = "¿øº»ÆÄÀÏÀÌ¸§" '¡Ú¡Ú
-    rawS = "¿øº»½ÃÆ®ÀÌ¸§" '¡Ú¡Ú
-    tskF = ThisWorkbook.Name 'ÀÛ¾÷ÆÄÀÏ ÀÌ¸§
-    tskS = "ÀÛ¾÷½ÃÆ®ÀÌ¸§" '¡Ú¡Ú
+    '//ë³€ìˆ˜ ì •ì˜
+    rawF = "ì›ë³¸íŒŒì¼ì´ë¦„" 'â˜…â˜…
+    rawS = "ì›ë³¸ì‹œíŠ¸ì´ë¦„" 'â˜…â˜…
+    tskF = ThisWorkbook.Name 'ì‘ì—…íŒŒì¼ ì´ë¦„
+    tskS = "ì‘ì—…ì‹œíŠ¸ì´ë¦„" 'â˜…â˜…
        
-    '//°øÅëDB Æú´õ¸¦ µ¹¸é¼­ ¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏ Ã£¾Æ¼­ rawF¿¡ ÀÌ¸§ ¼³Á¤
+    '//ê³µí†µDB í´ë”ë¥¼ ëŒë©´ì„œ ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ ì°¾ì•„ì„œ rawFì— ì´ë¦„ ì„¤ì •
     For i = 1 To 24
-        rawP = Chr(66 + i) & ":\01 °øÅëDB\" '°øÅë Æú´õ °æ·Î ¼³Á¤¡Ú¡Ú
-        rawF = Dir(rawP & rawF) '¿øº»ÆÄÀÏ ÀÌ¸§ °æ·Î Æ÷ÇÔ ¼³Á¤
-        If Left(rawF, 1) = "~" Then 'ÆÄÀÏÀ» ´Ù¸¥ »ç¶÷ÀÌ ¿­°í ÀÖ´Â °æ¿ì
-            MsgBox "°øÅë±âÃÊÀÚ·á ÆÄÀÏÀÌ ´Ù¸¥ ´©±º°¡¿¡ ÀÇÇØ ¿­·Á ÀÖ½À´Ï´Ù." & vbNewLine & _
-                "È®ÀÎ¹Ù¶ø´Ï´Ù." & Space(10), vbInformation, banner
+        rawP = Chr(66 + i) & ":\01 ê³µí†µDB\" 'ê³µí†µ í´ë” ê²½ë¡œ ì„¤ì •â˜…â˜…
+        rawF = Dir(rawP & rawF) 'ì›ë³¸íŒŒì¼ ì´ë¦„ ê²½ë¡œ í¬í•¨ ì„¤ì •
+        If Left(rawF, 1) = "~" Then 'íŒŒì¼ì„ ë‹¤ë¥¸ ì‚¬ëŒì´ ì—´ê³  ìˆëŠ” ê²½ìš°
+            MsgBox "ê³µí†µê¸°ì´ˆìë£Œ íŒŒì¼ì´ ë‹¤ë¥¸ ëˆ„êµ°ê°€ì— ì˜í•´ ì—´ë ¤ ìˆìŠµë‹ˆë‹¤." & vbNewLine & _
+                "í™•ì¸ë°”ëë‹ˆë‹¤." & Space(10), vbInformation, banner
             Exit Sub
         End If
         If rawF <> Empty Then GoTo n:
     Next
-    MsgBox "°øÅë±âÃÊÀÚ·á ÆÄÀÏÀÌ °øÅëDB Æú´õ¿¡ ¾ø½À´Ï´Ù." & vbNewLine & _
-        "È®ÀÎ¹Ù¶ø´Ï´Ù." & Space(10), vbInformation, banner
+    MsgBox "ê³µí†µê¸°ì´ˆìë£Œ íŒŒì¼ì´ ê³µí†µDB í´ë”ì— ì—†ìŠµë‹ˆë‹¤." & vbNewLine & _
+        "í™•ì¸ë°”ëë‹ˆë‹¤." & Space(10), vbInformation, banner
     Exit Sub
 n:
 
-    '//¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏ ¿­±â
+    '//ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ ì—´ê¸°
     rawFOpen = False
     For Each fileC In Workbooks
         If fileC.Name = rawF Then rawFOpen = True
@@ -47,43 +46,43 @@ n:
     If rawFOpen = True Then
         Windows(rawF).Activate
     Else
-        Workbooks.Open Filename:=rawP & rawF, Password:="ÆÄÀÏÀÇ ºñ¹Ğ¹øÈ£"   'ºñ¹Ğ¹øÈ£·Î ÆÄÀÏ ¿­±â¡Ú¡Ú
+        Workbooks.Open Filename:=rawP & rawF, Password:="íŒŒì¼ì˜ ë¹„ë°€ë²ˆí˜¸"   'ë¹„ë°€ë²ˆí˜¸ë¡œ íŒŒì¼ ì—´ê¸°â˜…â˜…
         Windows(rawF).Activate
     End If
     
-    '//ÀÛ¾÷ÆÄÀÏÀÇ ±âÃÊÀÚ·á ÃÊ±âÈ­
+    '//ì‘ì—…íŒŒì¼ì˜ ê¸°ì´ˆìë£Œ ì´ˆê¸°í™”
     Windows(tskF).Activate
     Sheets(tskS).UsedRange.ClearContents
     
-    '//°øÅë±âÃÊÀÚ·á¿¡¼­ ±âÃÊÀÚ·á °¡Á®¿À±â
+    '//ê³µí†µê¸°ì´ˆìë£Œì—ì„œ ê¸°ì´ˆìë£Œ ê°€ì ¸ì˜¤ê¸°
     Windows(rawF).Activate
     Sheets(rawS).UsedRange.Copy
     Windows(tskF).Activate
     Sheets(tskS).Range("A1").PasteSpecial (3)
     Application.CutCopyMode = False
     
-    '//¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏ ´İ±â
-    Windows(rawF).Close savechanges:=False 'ÀúÀå¾ÈÇÏ°í ´İ±â
+    '//ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ ë‹«ê¸°
+    Windows(rawF).Close savechanges:=False 'ì €ì¥ì•ˆí•˜ê³  ë‹«ê¸°
        
-    '//µ¥ÀÌÅÍ¿µ¿ª¼³Á¤
+    '//ë°ì´í„°ì˜ì—­ì„¤ì •
     Windows(tskF).Activate
     Set DB = Sheets(tskS).Range("A1").CurrentRegion
     cntR = DB.Rows.Count
     cntC = DB.Columns.Count
     
-    '//Âî²¨±â ¿µ¿ª »èÁ¦
+    '//ì°Œêº¼ê¸° ì˜ì—­ ì‚­ì œ
     Sheets(tskS).Activate
     Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Resize(Rows.Count - cntR, Columns.Count).Delete Shift:=xlUp
             
-    '//¿­³ÊºñÁ¶Á¤
+    '//ì—´ë„ˆë¹„ì¡°ì •
     Sheets(tskS).UsedRange.EntireColumn.AutoFit
     
-    '//2Çà±âÁØ ¼­½ÄÀû¿ë
+    '//2í–‰ê¸°ì¤€ ì„œì‹ì ìš©
     Rows("2:2").Copy
     Rows("3:" & cntR).PasteSpecial (4)
     Application.CutCopyMode = False
         
-    '//¸¶¹«¸®
+    '//ë§ˆë¬´ë¦¬
     ActiveWorkbook.Save
     
 End Sub
