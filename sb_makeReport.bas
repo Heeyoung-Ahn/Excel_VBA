@@ -1,11 +1,8 @@
 Attribute VB_Name = "sb_makeReport"
 Option Explicit
+Dim rngA As Range, rngB As Range, rngC As Range
 
 Sub initializeRepport()
-    Dim rngA As Range
-    Dim rngB As Range
-    Dim rngC As Range
-    
     With Sheets("report")
         '[보호해제]
         .Unprotect Password:="12345"
@@ -31,7 +28,6 @@ Sub initializeRepport()
 End Sub
 
 Sub makeReport()
-    Dim rngA As Range, rngB As Range, rngC As Range
     Dim i As Integer
     Dim iRow As Integer, jRow As Integer
 
