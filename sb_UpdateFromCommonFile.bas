@@ -111,10 +111,10 @@ n:
         End If
     Next
     If rawFOpen = True Then
-        Windows(rawF).Activate
+        Workbooks(rawF).Activate
     Else
         Workbooks.Open Filename:=rawP & rawF, Password:="파일의 비밀번호"   ' 비밀번호 ★★
-        Windows(rawF).Activate
+        Workbooks(rawF).Activate
     End If
     
     '//공통기초파일 필드명 newFieldNM 배열에 반환
@@ -129,19 +129,17 @@ n:
         If oldFieldNM(i) <> newFieldNM(i) Then
             MsgBox MName & "공통기초파일과 작업파일의 필드명이 서로 불일치합니다." & vbNewLine & _
                 "확인 후 다시 진행해 주세요.", vbInformation, banner
-            Windows(tskF).Activate
+            Workbooks(tskF).Activate
             GoTo m:
         End If
     Next i
     
     '//작업파일의 기초자료 초기화
-    Windows(tskF).Activate
-    Sheets(tskS).UsedRange.ClearContents
+    Workbooks(tskF).Sheets(tskS).UsedRange.ClearContents
     
     '//공통기초자료에서 기초자료 가져오기
-    Windows(rawF).Activate
-    Sheets(rawS).UsedRange.Copy
-    Windows(tskF).Activate
+    Workbooks(rawF).Sheets(rawS).UsedRange.Copy
+    Workbooks(tskF).Activate
     Sheets(tskS).Range("A1").PasteSpecial (3)
     Application.CutCopyMode = False
            
@@ -166,8 +164,8 @@ n:
 m:
     '//공통기초자료파일이 닫혀있었다면 다시 닫기
     If rawFOpen = False Then
-        Windows(rawF).Activate
-        Windows(rawF).Close SaveChanges:=False
+        Workbooks(rawF).Activate
+        Workbooks(rawF).Close SaveChanges:=False
     End If
 
     '//마무리
@@ -231,5 +229,3 @@ Sub DataCleaning()
     End With
     
 End Sub
-
-
