@@ -3,6 +3,7 @@ Option Explicit
 Const banner As String = "ê³µí†µê¸°ì´ˆìë£Œì—…ë°ì´íŠ¸"
 Dim MName As String
 Dim tskResultCD As Integer 'ì—…ë°ì´íŠ¸ ê²°ê³¼: 0 ì•ˆí•¨, 1 ì™„ë£Œ
+<<<<<<< HEAD
 
 '--------------------
 '  ¸ÅÅ©·Î ÃÖÀûÈ­
@@ -29,6 +30,8 @@ On Error Resume Next
     End With
 On Error GoTo 0
 End Sub
+=======
+>>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
 
 '----------------------------------
 '  ì—…ë°ì´íŠ¸ ì²´í¬
@@ -92,9 +95,12 @@ On Error Resume Next
 n:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     '//¸ÅÅ©·Î ÃÖÀûÈ­
     Call Optimization
 =======
+=======
+>>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
     '//ë§¤í¬ë¡œ ìµœì í™”
     With Application
         .ScreenUpdating = False
@@ -183,9 +189,12 @@ m:
     ActiveWorkbook.Save
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     '//¸ÅÅ©·Î ÃÖÀûÈ­ ¿øº¹
     Call Normal
 =======
+=======
+>>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
     '//ë§¤í¬ë¡œ ìµœì í™” ì›ë³µ
     With Application
         .ScreenUpdating = True
