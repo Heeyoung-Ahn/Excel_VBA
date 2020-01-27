@@ -1,9 +1,8 @@
 Attribute VB_Name = "sb_UpdateFromCommonFile"
 Option Explicit
-Const banner As String = "ê³µí†µê¸°ì´ˆìë£Œì—…ë°ì´íŠ¸"
+Const banner As String = "°øÅë±âÃÊÀÚ·á¾÷µ¥ÀÌÆ®"
 Dim MName As String
-Dim tskResultCD As Integer 'ì—…ë°ì´íŠ¸ ê²°ê³¼: 0 ì•ˆí•¨, 1 ì™„ë£Œ
-<<<<<<< HEAD
+Dim tskResultCD As Integer '¾÷µ¥ÀÌÆ® °á°ú: 0 ¾ÈÇÔ, 1 ¿Ï·á
 
 '--------------------
 '  ¸ÅÅ©·Î ÃÖÀûÈ­
@@ -30,36 +29,34 @@ On Error Resume Next
     End With
 On Error GoTo 0
 End Sub
-=======
->>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
 
 '----------------------------------
-'  ì—…ë°ì´íŠ¸ ì²´í¬
-'    - ì—…ë°ì´íŠ¸ ì§„í–‰ í™•ì¸
-'    - ì—…ë°ì´íŠ¸ ì§„í–‰ ê²°ê³¼ ì²´í¬
+'  ¾÷µ¥ÀÌÆ® Ã¼Å©
+'    - ¾÷µ¥ÀÌÆ® ÁøÇà È®ÀÎ
+'    - ¾÷µ¥ÀÌÆ® ÁøÇà °á°ú Ã¼Å©
 '----------------------------------
 Sub checkUpdate()
-    MName = "ì—…ë°ì´íŠ¸í•  íŒŒì¼ì´ë¦„" 'ì„¤ì • â˜…â˜…
+    MName = "¾÷µ¥ÀÌÆ®ÇÒ ÆÄÀÏÀÌ¸§" '¼³Á¤ ¡Ú¡Ú
 
-    If MsgBox(MName & " ìë£Œë¥¼ ê³µí†µê¸°ì´ˆìë£Œ í´ë”ì—ì„œ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤. " & vbNewLine & _
-        "ì¤€ë¹„ë˜ì—ˆìŠµë‹ˆê¹Œ?", vbQuestion + vbYesNo, banner) = vbNo Then
-        MsgBox "ê·¸ëŸ¼ ë‹¤ì‹œ ì¤€ë¹„í•˜ê³  ì—…ë°ì´íŠ¸ë¥¼ ì§„í–‰í•´ ì£¼ì„¸ìš”.", vbInformation, banner
+    If MsgBox(MName & " ÀÚ·á¸¦ °øÅë±âÃÊÀÚ·á Æú´õ¿¡¼­ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù. " & vbNewLine & _
+        "ÁØºñµÇ¾ú½À´Ï±î?", vbQuestion + vbYesNo, banner) = vbNo Then
+        MsgBox "±×·³ ´Ù½Ã ÁØºñÇÏ°í ¾÷µ¥ÀÌÆ®¸¦ ÁøÇàÇØ ÁÖ¼¼¿ä.", vbInformation, banner
         Exit Sub
     End If
     
     tskResultCD = 0
-    Call UpdateFromCommonFile 'ì‘ì—… í”„ë¡œì‹œì € ì„¤ì •
-    Call DataCleaning 'ì°Œêº¼ê¸° ì •ë¦¬
+    Call UpdateFromCommonFile 'ÀÛ¾÷ ÇÁ·Î½ÃÀú ¼³Á¤
+    Call DataCleaning 'Âî²¨±â Á¤¸®
     If tskResultCD = 1 Then
-        MsgBox MName & " ìë£Œ ì—…ë°ì´íŠ¸ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤." & Space(10), vbInformation, banner
+        MsgBox MName & " ÀÚ·á ¾÷µ¥ÀÌÆ®°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù." & Space(10), vbInformation, banner
     End If
 End Sub
 
 '---------------------------------------------------------------------
-'  ê³µí†µí´ë”ì˜ ê³µí†µê¸°ì´ˆìë£Œ íŒŒì¼ì„ ì—´ì–´ì„œ ì‘ì—… íŒŒì¼ ì—…ë°ì´íŠ¸
-'    - íŠ¹ì •í´ë”ì— ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ ìœ ë¬´ í™•ì¸
-'    - ê¸°ì¡´íŒŒì¼ê³¼ ì—…ë°ì´íŠ¸í•˜ë ¤ëŠ” íŒŒì¼ì˜ êµ¬ì¡° ë¹„êµ
-'    - ê³µí†µê¸°ì´ˆìë£Œë¡œ ì—…ë°ì´íŠ¸ í›„ ê¸°ë³¸ ì„œì‹ ì ìš©
+'  °øÅëÆú´õÀÇ °øÅë±âÃÊÀÚ·á ÆÄÀÏÀ» ¿­¾î¼­ ÀÛ¾÷ ÆÄÀÏ ¾÷µ¥ÀÌÆ®
+'    - Æ¯Á¤Æú´õ¿¡ ¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏ À¯¹« È®ÀÎ
+'    - ±âÁ¸ÆÄÀÏ°ú ¾÷µ¥ÀÌÆ®ÇÏ·Á´Â ÆÄÀÏÀÇ ±¸Á¶ ºñ±³
+'    - °øÅë±âÃÊÀÚ·á·Î ¾÷µ¥ÀÌÆ® ÈÄ ±âº» ¼­½Ä Àû¿ë
 '---------------------------------------------------------------------
 Sub UpdateFromCommonFile()
 
@@ -72,44 +69,32 @@ On Error Resume Next
     Dim rawFOpen As Boolean
     Dim oldFieldNM() As String, newFieldNM() As String
 
-    '//ë³€ìˆ˜ ì •ì˜
-    MName = "ì—…ë°ì´íŠ¸í•  íŒŒì¼ì´ë¦„" 'â˜…â˜…
-    rawS = "sheet1" 'ì›ë³¸ì‹œíŠ¸ ì´ë¦„ ì„¤ì • â˜…â˜…
-    tskF = ThisWorkbook.Name 'ì‘ì—…íŒŒì¼ ì´ë¦„ ì„¤ì •
-    tskS = "RawData" 'ì‘ì—…ì‹œíŠ¸ ì´ë¦„ ì„¤ì • â˜…â˜…
+    '//º¯¼ö Á¤ÀÇ
+    MName = "¾÷µ¥ÀÌÆ®ÇÒ ÆÄÀÏÀÌ¸§" '¡Ú¡Ú
+    rawS = "sheet1" '¿øº»½ÃÆ® ÀÌ¸§ ¼³Á¤ ¡Ú¡Ú
+    tskF = ThisWorkbook.Name 'ÀÛ¾÷ÆÄÀÏ ÀÌ¸§ ¼³Á¤
+    tskS = "RawData" 'ÀÛ¾÷½ÃÆ® ÀÌ¸§ ¼³Á¤ ¡Ú¡Ú
        
-    '//ê³µí†µê¸°ì´ˆìë£Œ í´ë”ì—ì„œ ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ì„ ì°¾ì•„ì„œ rawFì— ì„¤ì •
+    '//°øÅë±âÃÊÀÚ·á Æú´õ¿¡¼­ ¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏÀ» Ã£¾Æ¼­ rawF¿¡ ¼³Á¤
     For i = 1 To 24
-        rawP = Chr(66 + i) & ":\00 ê³µí†µê¸°ì´ˆìë£Œ\" 'ì—…ë°ì´íŠ¸ ëŒ€ìƒ ìë£Œì˜ í´ë” ì„¤ì • â˜…â˜…
-        rawF = Dir(rawP & MName) 'ì›ë³¸íŒŒì¼ ê²½ë¡œí¬í•¨ ì´ë¦„
+        rawP = Chr(66 + i) & ":\00 °øÅë±âÃÊÀÚ·á\" '¾÷µ¥ÀÌÆ® ´ë»ó ÀÚ·áÀÇ Æú´õ ¼³Á¤ ¡Ú¡Ú
+        rawF = Dir(rawP & MName) '¿øº»ÆÄÀÏ °æ·ÎÆ÷ÇÔ ÀÌ¸§
         If Left(rawF, 1) = "~" Then
-            MsgBox MName & " íŒŒì¼ì„ ë‹¤ë¥¸ ëˆ„êµ°ê°€ê°€ ì—´ê³  ìˆìŠµë‹ˆë‹¤.   " & vbNewLine & _
-                "í™•ì¸ í›„ ë‹¤ì‹œ ì§„í–‰í•´ ì£¼ì„¸ìš”.", vbInformation, banner
+            MsgBox MName & " ÆÄÀÏÀ» ´Ù¸¥ ´©±º°¡°¡ ¿­°í ÀÖ½À´Ï´Ù.   " & vbNewLine & _
+                "È®ÀÎ ÈÄ ´Ù½Ã ÁøÇàÇØ ÁÖ¼¼¿ä.", vbInformation, banner
             Exit Sub
         End If
         If rawF <> Empty Then GoTo n:
     Next
-    MsgBox MName & " íŒŒì¼ì´ ì—…ë°ì´íŠ¸í•˜ë ¤ëŠ” í´ë”ì— ì—†ìŠµë‹ˆë‹¤." & vbNewLine & _
-        "í™•ì¸ í›„ ë‹¤ì‹œ ì§„í–‰í•´ ì£¼ì„¸ìš”.", vbInformation, banner
+    MsgBox MName & " ÆÄÀÏÀÌ ¾÷µ¥ÀÌÆ®ÇÏ·Á´Â Æú´õ¿¡ ¾ø½À´Ï´Ù." & vbNewLine & _
+        "È®ÀÎ ÈÄ ´Ù½Ã ÁøÇàÇØ ÁÖ¼¼¿ä.", vbInformation, banner
     Exit Sub
 n:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     '//¸ÅÅ©·Î ÃÖÀûÈ­
     Call Optimization
-=======
-=======
->>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
-    '//ë§¤í¬ë¡œ ìµœì í™”
-    With Application
-        .ScreenUpdating = False
-        .EnableEvents = False
-        .Calculation = xlCalculationManual
-    End With
->>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
 
-    '//ê¸°ì¡´ ì‘ì—…íŒŒì¼ í•„ë“œëª… oldFieldNM ë°°ì—´ì— ë°˜í™˜
+    '//±âÁ¸ ÀÛ¾÷ÆÄÀÏ ÇÊµå¸í oldFieldNM ¹è¿­¿¡ ¹İÈ¯
     Sheets(tskS).Activate
     cntC = Range("A1").CurrentRegion.Columns.Count
     ReDim oldFieldNM(cntC - 1)
@@ -117,7 +102,7 @@ n:
         oldFieldNM(i) = Sheets(tskS).Range("A1").Offset(0, i).Value
     Next i
 
-    '//ì—…ë°ì´íŠ¸ ëŒ€ìƒ íŒŒì¼ ì—´ê¸°
+    '//¾÷µ¥ÀÌÆ® ´ë»ó ÆÄÀÏ ¿­±â
     rawFOpen = False
     For Each fileC In Workbooks
         If fileC.Name = rawF Then
@@ -128,88 +113,76 @@ n:
     If rawFOpen = True Then
         Windows(rawF).Activate
     Else
-        Workbooks.Open Filename:=rawP & rawF, Password:="íŒŒì¼ì˜ ë¹„ë°€ë²ˆí˜¸"   'ë¹„ë°€ë²ˆí˜¸ë¡œ íŒŒì¼ ì—´ê¸°â˜…â˜…
+        Workbooks.Open Filename:=rawP & rawF, Password:="ÆÄÀÏÀÇ ºñ¹Ğ¹øÈ£"   ' ºñ¹Ğ¹øÈ£ ¡Ú¡Ú
         Windows(rawF).Activate
     End If
     
-    '//ê³µí†µê¸°ì´ˆíŒŒì¼ í•„ë“œëª… newFieldNM ë°°ì—´ì— ë°˜í™˜
+    '//°øÅë±âÃÊÆÄÀÏ ÇÊµå¸í newFieldNM ¹è¿­¿¡ ¹İÈ¯
     Sheets(rawS).Activate
     ReDim newFieldNM(cntC - 1)
     For i = 0 To cntC - 1
         newFieldNM(i) = Sheets(rawS).Range("A1").Offset(0, i).Value
     Next i
 
-    '//íŒŒì¼ êµ¬ì¡° ì ê²€: í•„ë“œëª…
+    '//ÆÄÀÏ ±¸Á¶ Á¡°Ë: ÇÊµå¸í
     For i = 0 To cntC - 1
         If oldFieldNM(i) <> newFieldNM(i) Then
-            MsgBox MName & "ê³µí†µê¸°ì´ˆíŒŒì¼ê³¼ ì‘ì—…íŒŒì¼ì˜ í•„ë“œëª…ì´ ì„œë¡œ ë¶ˆì¼ì¹˜í•©ë‹ˆë‹¤." & vbNewLine & _
-                "í™•ì¸ í›„ ë‹¤ì‹œ ì§„í–‰í•´ ì£¼ì„¸ìš”.", vbInformation, banner
+            MsgBox MName & "°øÅë±âÃÊÆÄÀÏ°ú ÀÛ¾÷ÆÄÀÏÀÇ ÇÊµå¸íÀÌ ¼­·Î ºÒÀÏÄ¡ÇÕ´Ï´Ù." & vbNewLine & _
+                "È®ÀÎ ÈÄ ´Ù½Ã ÁøÇàÇØ ÁÖ¼¼¿ä.", vbInformation, banner
             Windows(tskF).Activate
             GoTo m:
         End If
     Next i
     
-    '//ì‘ì—…íŒŒì¼ì˜ ê¸°ì´ˆìë£Œ ì´ˆê¸°í™”
+    '//ÀÛ¾÷ÆÄÀÏÀÇ ±âÃÊÀÚ·á ÃÊ±âÈ­
     Windows(tskF).Activate
     Sheets(tskS).UsedRange.ClearContents
     
-    '//ê³µí†µê¸°ì´ˆìë£Œì—ì„œ ê¸°ì´ˆìë£Œ ê°€ì ¸ì˜¤ê¸°
+    '//°øÅë±âÃÊÀÚ·á¿¡¼­ ±âÃÊÀÚ·á °¡Á®¿À±â
     Windows(rawF).Activate
     Sheets(rawS).UsedRange.Copy
     Windows(tskF).Activate
     Sheets(tskS).Range("A1").PasteSpecial (3)
     Application.CutCopyMode = False
            
-    '//ë°ì´í„°ì˜ì—­ì„¤ì •
+    '//µ¥ÀÌÅÍ¿µ¿ª¼³Á¤
     Set DB = Sheets(tskS).Range("A1").CurrentRegion
     cntR = DB.Rows.Count
     cntC = DB.Columns.Count
     
-    '//ì°Œêº¼ê¸° ì˜ì—­ ì‚­ì œ
+    '//Âî²¨±â ¿µ¿ª »èÁ¦
     Sheets(tskS).Activate
     Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Resize(Rows.Count - cntR, Columns.Count).Delete shift:=xlUp
       
-    '//ì„œì‹ì •ë¦¬
+    '//¼­½ÄÁ¤¸®
     Sheets(tskS).UsedRange.EntireColumn.AutoFit
     Rows("2:2").Copy
     Rows("3:" & cntR).PasteSpecial (4)
     Application.CutCopyMode = False
     
-    '//ì‘ì—…ì™„ë£Œê²°ê³¼ì²˜ë¦¬
+    '//ÀÛ¾÷¿Ï·á°á°úÃ³¸®
     tskResultCD = 1
        
 m:
-    '//ê³µí†µê¸°ì´ˆìë£ŒíŒŒì¼ì´ ë‹«í˜€ìˆì—ˆë‹¤ë©´ ë‹¤ì‹œ ë‹«ê¸°
+    '//°øÅë±âÃÊÀÚ·áÆÄÀÏÀÌ ´İÇôÀÖ¾ú´Ù¸é ´Ù½Ã ´İ±â
     If rawFOpen = False Then
         Windows(rawF).Activate
         Windows(rawF).Close SaveChanges:=False
     End If
 
-    '//ë§ˆë¬´ë¦¬
+    '//¸¶¹«¸®
     ActiveWorkbook.Save
     
-<<<<<<< HEAD
-<<<<<<< HEAD
     '//¸ÅÅ©·Î ÃÖÀûÈ­ ¿øº¹
     Call Normal
-=======
-=======
->>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
-    '//ë§¤í¬ë¡œ ìµœì í™” ì›ë³µ
-    With Application
-        .ScreenUpdating = True
-        .EnableEvents = True
-        .Calculation = xlCalculationAutomatic
-    End With
->>>>>>> 8bcfb6715afa049aa7ac5b1f1d1ab22fafd0445f
     
 End Sub
 
 '---------------------------------
-'  ê³µí†µê¸°ì´ˆìë£Œ ì°Œêº¼ê¸° ì œê±°
-'    - 0ê°’ ì œê±°í•˜ê¸°
-'    - Trim, Clean ì§„í–‰
-'    - ì°Œê±°ê¸° ì˜ì—­ ì œê±°
+'  °øÅë±âÃÊÀÚ·á Âî²¨±â Á¦°Å
+'    - 0°ª Á¦°ÅÇÏ±â
+'    - Trim, Clean ÁøÇà
+'    - Âî°Å±â ¿µ¿ª Á¦°Å
 '---------------------------------
 Sub DataCleaning()
     Dim tskS As String
@@ -217,26 +190,26 @@ Sub DataCleaning()
     Dim cntR As Integer, cntC As Integer, i As Integer, j As Integer
     Dim data() As Variant
     
-    '//ë§¤í¬ë¡œ ìµœì í™”
+    '//¸ÅÅ©·Î ÃÖÀûÈ­
     With Application
         .ScreenUpdating = False
         .EnableEvents = False
         .Calculation = xlCalculationManual
     End With
     
-    '//ì‘ì—…ì˜ì—­ ì„¤ì •
-    tskS = "RawData" 'ì‘ì—…ì‹œíŠ¸ ì´ë¦„ ì„¤ì • â˜…â˜…
+    '//ÀÛ¾÷¿µ¿ª ¼³Á¤
+    tskS = "RawData" 'ÀÛ¾÷½ÃÆ® ÀÌ¸§ ¼³Á¤ ¡Ú¡Ú
     Sheets(tskS).Activate
     Set RngData = Range("A1").CurrentRegion
     cntR = RngData.Rows.Count
     cntC = RngData.Columns.Count
     ReDim data(1 To cntR - 1, 1 To cntC)
     
-    '//0ê°’ ì œê±°, Trim, Clean
+    '//0°ª Á¦°Å, Trim, Clean
     For i = 1 To cntR - 1
         For j = 1 To cntC
             Select Case Cells(2, 1).Offset(i - 1, j - 1)
-                Case 0: data(i, j) = ""
+                Case 0: data(i, j) = vbNullString
                 Case Else: data(i, j) = Application.WorksheetFunction.Clean(Trim(Cells(2, 1).Offset(i - 1, j - 1)))
             End Select
         Next j
@@ -244,13 +217,13 @@ Sub DataCleaning()
     Cells(1, 1).CurrentRegion.Offset(1).ClearContents
     Cells(2, 1).Resize(cntR - 1, cntC) = data
     
-    '//ì°Œêº¼ê¸° ì˜ì—­ ì œê±°
+    '//Âî²¨±â ¿µ¿ª Á¦°Å
     RngData.Cells(cntR + 1, 1).Resize(Rows.Count - cntR, Columns.Count).Delete shift:=xlUp
 
-    '//ë§ˆë¬´ë¦¬
+    '//¸¶¹«¸®
     ActiveWorkbook.Save
     
-    '//ë§¤í¬ë¡œ ìµœì í™” ì›ë³µ
+    '//¸ÅÅ©·Î ÃÖÀûÈ­ ¿øº¹
     With Application
         .ScreenUpdating = True
         .EnableEvents = True
@@ -258,3 +231,5 @@ Sub DataCleaning()
     End With
     
 End Sub
+
+
