@@ -25,10 +25,8 @@ On Error GoTo ErrHandler:
     cntR = data.Rows.Count
     cntC = data.Columns.Count
     
-    data.Cells(cntR + 1, 1).Resize(Rows.Count - cntR, Columns.Count).Select
-    Selection.Delete
-    data.Cells(1, cntC + 1).Resize(Rows.Count, Columns.Count - cntC).Select
-    Selection.Delete
+    data.Cells(cntR + 1, 1).Resize(Rows.Count - cntR, Columns.Count).Delete
+    data.Cells(1, cntC + 1).Resize(Rows.Count, Columns.Count - cntC).Delete
     
     ActiveWorkbook.Save
     Exit Sub
