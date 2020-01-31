@@ -26,6 +26,9 @@ End Sub
 '일반 모듈에
 Option Explicit
 
+'------------------------
+'  사용자 이름 지정
+'------------------------
 Sub setUserName(userNM As String)
 
     If MsgBox("이 프로그램에서 사용할 사용자의 이름을 " & userNM & "으로 하겠습니까?", vbQuestion + vbYesNo, banner) = vbNo Then
