@@ -5,12 +5,12 @@ Sub aryData1()
     
     Dim mydata(1 To 10) As Integer, intN As Integer
     
-    '//¹è¿­¿¡ µ¥ÀÌÅÍ¸¦ ³Ö°í
+    '//ë°°ì—´ì— ë°ì´í„°ë¥¼ ë„£ê³ 
     For intN = 1 To 10
         mydata(intN) = CInt(Rnd * 100)
     Next intN
     
-    '//¹è¿­ µ¥ÀÌÅÍ¸¦ ¿¢¼¿¿¡ ¹İÈ¯
+    '//ë°°ì—´ ë°ì´í„°ë¥¼ ì—‘ì…€ì— ë°˜í™˜
     For intN = 1 To 10
         ActiveSheet.Cells(intN, 1) = mydata(intN)
     Next intN
@@ -22,17 +22,17 @@ Sub aryData2()
     Dim mydata(1 To 10) As Integer, intN As Integer
     Dim i As Integer, j As Integer
     
-    '//¹è¿­¿¡ µ¥ÀÌÅÍ¸¦ ³Ö°í
+    '//ë°°ì—´ì— ë°ì´í„°ë¥¼ ë„£ê³ 
     For intN = 1 To 10
         mydata(intN) = Int(Rnd * 100)
     Next intN
     
-    '//¹è¿­ µ¥ÀÌÅÍ¸¦ ¿¢¼¿¿¡ ¹İÈ¯(¼öÆò¹æÇâ)
+    '//ë°°ì—´ ë°ì´í„°ë¥¼ ì—‘ì…€ì— ë°˜í™˜(ìˆ˜í‰ë°©í–¥)
     ActiveSheet.Cells(1, 1).Resize(1, 10).Value = mydata
-    '//¹è¿­ µ¥ÀÌÅÍ¸¦ ¿¢¼¿¿¡ ¹İÈ¯(¼öÁ÷¹æÇâ)
+    '//ë°°ì—´ ë°ì´í„°ë¥¼ ì—‘ì…€ì— ë°˜í™˜(ìˆ˜ì§ë°©í–¥)
     ActiveSheet.Cells(1, 1).Resize(10, 1).Value = Application.WorksheetFunction.Transpose(mydata)
     
-    '//µ¥ÀÌÅÍ ¹üÀ§ÀÇ ºñ¾îÀÖ´Â ¿µ¿ª(B2:J10)¿¡ 99´Ü ÀÔ·Â
+    '//ë°ì´í„° ë²”ìœ„ì˜ ë¹„ì–´ìˆëŠ” ì˜ì—­(B2:J10)ì— 99ë‹¨ ì…ë ¥
     For i = 1 To 9
         For j = 1 To 9
             ActiveSheet.Cells(1, 1).Offset(i, j).Value = i * j
@@ -43,7 +43,7 @@ End Sub
 
 Sub aryData3()
 
-    Dim aryData() As Variant '¿¢¼¿ÀÇ ¿µ¿ªµ¥ÀÌÅÍ¸¦ ¹è¿­¿¡ ÇÑ¹ø¿¡ ³ÖÀ» ¶§´Â µ¥ÀÌÅÍÇüÀ» Variant·Î ÇØ¾ß ÇÔ
+    Dim aryData() As Variant 'ì—‘ì…€ì˜ ì˜ì—­ë°ì´í„°ë¥¼ ë°°ì—´ì— í•œë²ˆì— ë„£ì„ ë•ŒëŠ” ë°ì´í„°í˜•ì„ Variantë¡œ í•´ì•¼ í•¨
     Dim rngDB As Range
     Dim cntR As Integer, cntC As Integer
     
@@ -51,20 +51,20 @@ Sub aryData3()
     cntR = rngDB.Rows.Count
     cntC = rngDB.Columns.Count
     
-    '//µ¿Àû¹è¿­ Å©±â ÁöÁ¤
+    '//ë™ì ë°°ì—´ í¬ê¸° ì§€ì •
     ReDim aryData(cntR - 1, cntC - 1)
     
-    '//¿¢¼¿ÀÇ ÀÚ·á¸¦ ¹è¿­·Î ¹İÈ¯
+    '//ì—‘ì…€ì˜ ìë£Œë¥¼ ë°°ì—´ë¡œ ë°˜í™˜
     aryData = rngDB.Value
     
-    '//¹è¿­À» ¿¢¼¿¿¡ ¹İÈ¯
+    '//ë°°ì—´ì„ ì—‘ì…€ì— ë°˜í™˜
     ActiveSheet.Cells(20, 1).Resize(10, 10).Value = aryData
     
 End Sub
 
 Sub aryData4()
 
-    Dim aryData() As Integer '¿¢¼¿ÀÇ ÀÚ·á¸¦ ÇÏ³ª ¾¿ ¹è¿­¿¡ ³ÖÀ» ¶§´Â µ¥ÀÌÅÍÇüÀ» ½ÇÁ¦ µ¥ÀÌÅÍ ÇüÀ¸·Î
+    Dim aryData() As Integer 'ì—‘ì…€ì˜ ìë£Œë¥¼ í•˜ë‚˜ ì”© ë°°ì—´ì— ë„£ì„ ë•ŒëŠ” ë°ì´í„°í˜•ì„ ì‹¤ì œ ë°ì´í„° í˜•ìœ¼ë¡œ
     Dim i As Integer, j As Integer
     Dim rngDB As Range
     Dim cntR As Integer, cntC As Integer
@@ -74,21 +74,21 @@ Sub aryData4()
     cntR = rngDB.Rows.Count
     cntC = rngDB.Columns.Count
     
-    '//µ¿Àû¹è¿­ Å©±â ÁöÁ¤
+    '//ë™ì ë°°ì—´ í¬ê¸° ì§€ì •
     ReDim aryData(cntR - 1, cntC - 1)
     
-    '//¿¢¼¿ ÀÚ·á¸¦ ¹è¿­·Î
+    '//ì—‘ì…€ì˜ ìë£Œë¥¼ ë°°ì—´ë¡œ
     For i = 1 To cntR
         For j = 1 To cntC
             aryData(i - 1, j - 1) = ActiveSheet.Cells(1, 1).Offset(i - 1, j - 1).Value
         Next j
     Next i
     
-    '¹è¿­ Å©±â º¯¼ö¿¡ ¹İÈ¯
+    'ë°°ì—´ í¬ê¸° ë³€ìˆ˜ì— ë°˜í™˜
     intR = UBound(aryData, 1) - LBound(aryData, 1) + 1
     intC = UBound(aryData, 2) - LBound(aryData, 2) + 1
     
-    '//¹è¿­À» ¿¢¼¿¿¡ ¹İÈ¯
+    '//ë°°ì—´ì„ ì—‘ì…€ì— ë°˜í™˜
     ActiveSheet.Cells(20, 1).Resize(intR, intC).Value = aryData
     
 End Sub
