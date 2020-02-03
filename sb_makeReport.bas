@@ -39,7 +39,6 @@ End Sub
 '------------------------------------
 Sub initializeReport()
     With Sheets("report")
-<<<<<<< HEAD
         '//보호해제
             .Unprotect Password:="12345"
         '//영역설정
@@ -61,29 +60,6 @@ Sub initializeReport()
             Set rngB = Nothing
             Set rngC = Nothing
             ActiveWorkbook.Save
-=======
-        '[보호해제]
-        .Unprotect Password:="12345"
-        '[영역설정]
-        Set rngA = .Columns("B").Find("■ 서울지역 소파 판매 목록", lookat:=xlWhole)
-        Set rngB = .Columns("B").Find("■ 광주지역 책상 판매 목록", lookat:=xlWhole)
-        Set rngC = .Columns("B").Find("■ 대전지역 침대 판매 목록", lookat:=xlWhole)
-        '[입력내용초기화]
-        .Range("B4").ClearContents
-        rngA.Offset(2).Resize(rngB.Row - rngA.Row - 3, 7).ClearContents
-        rngB.Offset(2).Resize(rngC.Row - rngB.Row - 3, 7).ClearContents
-        rngC.Offset(2).Resize(.Rows.Count - rngC.Row - 1, 7).ClearContents
-        '[찌꺼기영역 제거]
-        rngC.Offset(3).Resize(Rows.Count - rngC.Row - 2, 7).Delete shift:=xlUp
-        '[보호]
-        .Protect Password:="12345"
-        '[마무리]
-        .Range("B1").Activate
-        Set rngA = Nothing
-        Set rngB = Nothing
-        Set rngC = Nothing
-        ActiveWorkbook.Save
->>>>>>> ef3bfb59a4b12a4029224169735015481f10ff8d
     End With
 End Sub
 
