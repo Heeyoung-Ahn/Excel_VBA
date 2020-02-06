@@ -120,7 +120,7 @@ Sub makeReport()
             '[보고서 입력]
                 rngCriteria.Cells(1, 1).Offset(1).Value = "서울"
                 rngCriteria.Cells(1, 1).Offset(1, 1).Value = "소파"
-                rngDB.AdvancedFilter Action:=xlFilterCopy, criteriarange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
+                rngDB.AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
                 rngCopy.CurrentRegion.Offset(1).Resize(i, 7).Copy
                 rngA.Offset(2).PasteSpecial Paste:=xlPasteValues
                 
@@ -141,7 +141,7 @@ Sub makeReport()
             '[보고서 입력]
                 rngCriteria.Cells(1, 1).Offset(1).Value = "광주"
                 rngCriteria.Cells(1, 1).Offset(1, 1).Value = "책상"
-                rngDB.AdvancedFilter Action:=xlFilterCopy, criteriarange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
+                rngDB.AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
                 rngCopy.CurrentRegion.Offset(1).Resize(i, 7).Copy
                 rngB.Offset(2).PasteSpecial Paste:=xlPasteValues
                 
@@ -155,7 +155,7 @@ Sub makeReport()
             '[보고서 입력]
                 rngCriteria.Cells(1, 1).Offset(1).Value = "대전"
                 rngCriteria.Cells(1, 1).Offset(1, 1).Value = "침대"
-                rngDB.AdvancedFilter Action:=xlFilterCopy, criteriarange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
+                rngDB.AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=rngCriteria.CurrentRegion, copytorange:=rngCopy, Unique:=False
                 rngCopy.CurrentRegion.Offset(1).Resize(i, 7).Copy
                 rngC.Offset(2).PasteSpecial Paste:=xlPasteValues
                 
