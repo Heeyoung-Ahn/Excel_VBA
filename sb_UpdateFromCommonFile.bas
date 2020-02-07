@@ -79,7 +79,7 @@ On Error Resume Next
     '//공통기초자료 폴더에서 업데이트 대상 파일을 찾아서 rawF에 설정
     For i = 1 To 24
         rawP = Chr(66 + i) & ":\00 공통기초자료\" '업데이트 대상 자료의 폴더 설정 ★★
-        rawF = Dir(rawP & MName) '원본파일 경로포함 이름
+        rawF = Dir(rawP & "*" & MName) '원본파일 경로포함 이름
         If Left(rawF, 1) = "~" Then
             MsgBox MName & " 파일을 다른 누군가가 열고 있습니다.   " & vbNewLine & _
                 "확인 후 다시 진행해 주세요.", vbInformation, banner
