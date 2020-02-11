@@ -1,12 +1,18 @@
 Attribute VB_Name = "sb_AdvancedFilter2"
 Option Explicit
 
+'-------------------------------------------
+'  xlFilterInPlace의 경우 고급필터 해제
+'-------------------------------------------
 Sub dismissAF()
     If ActiveSheet.FilterMode = True Then
         ActiveSheet.ShowAllData
     End If
 End Sub
 
+'------------------------------
+'  xlFilterInPlace 고급필터
+'------------------------------
 Sub AF1()
     Dim rngDB As Range
     Dim rngCriteria As Range
@@ -17,6 +23,10 @@ Sub AF1()
     rngDB.AdvancedFilter Action:=xlFilterInPlace, CriteriaRange:=rngCriteria, Unique:=False
 End Sub
 
+'-------------------------------------------------------------
+'  복사위치 영역을 정확하게 설정하여 진행하는 고급필터
+'    - 복사위치 아래의 데이터를 보존할 수 있음
+'-------------------------------------------------------------
 Sub AF2()
     Dim rngDB As Range
     Dim rngCriteria As Range
@@ -33,6 +43,9 @@ Sub AF2()
     rngDB.AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=rngCriteria, copytorange:=rngCopy, Unique:=False
 End Sub
 
+'-----------------------
+'  일반적인 고급필터
+'-----------------------
 Sub AF3()
     Dim rngDB As Range
     Dim rngCriteria As Range
