@@ -37,7 +37,7 @@ End Sub
 '    - 업데이트 진행 결과 체크
 '----------------------------------
 Sub checkUpdate()
-    MName = "사원리스트.xlsx" '설정 ★★
+    MName = "사원리스트" '설정 ★★
 
     If MsgBox(MName & " 자료를 공통기초자료 폴더에서 업데이트합니다." & vbNewLine & _
         "준비되었습니까?", vbQuestion + vbYesNo, banner) = vbNo Then
@@ -62,7 +62,6 @@ End Sub
 '---------------------------------------------------------------------
 Sub UpdateFromCommonFile()
 
-On Error Resume Next
     Dim fileC As Workbook
     Dim rawP As String, rawF As String, rawS As String
     Dim tskF As String
@@ -72,6 +71,7 @@ On Error Resume Next
     Dim oldFieldNM() As String, newFieldNM() As String
 
     '//변수 정의
+    rawF = "*사원리스트.xls*" '원본파일 이름 설정 ★★
     rawS = "사원" '원본시트 이름 설정 ★★
     tskF = ThisWorkbook.Name '작업파일 이름 설정
     tskS = "RawData" '작업시트 이름 설정 ★★
@@ -79,7 +79,7 @@ On Error Resume Next
     '//공통기초자료 폴더에서 업데이트 대상 파일을 찾아서 rawF에 설정
     For i = 1 To 24
         rawP = Chr(66 + i) & ":\00 공통기초자료\" '업데이트 대상 자료의 폴더 설정 ★★
-        rawF = Dir(rawP & "*" & MName) '원본파일 경로포함 이름
+        rawF = Dir(rawP & "*" & rawF) '원본파일 경로포함 이름
         If Left(rawF, 1) = "~" Then
             MsgBox MName & " 파일을 다른 누군가가 열고 있습니다.   " & vbNewLine & _
                 "확인 후 다시 진행해 주세요.", vbInformation, banner
