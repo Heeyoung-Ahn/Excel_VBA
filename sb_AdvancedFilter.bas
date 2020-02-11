@@ -17,17 +17,14 @@ Sub AdvancedFilter()
     Sheet2.Range("A1").CurrentRegion.Offset(1).ClearContents
         
     '//고급필터 영역 범위 설정
-    '*************************************
-    '*  주의사항                                                        *
-    '*   - 조건범위와 복사위치는 같은 시트에 있어야 함   *
-    '*************************************
     Set rngDB = Sheets(1).Range("A1").CurrentRegion '목록범위(데이터 영역) 설정
     Set rngCriteria = Application.InputBox("조건범위를 선택한 후 확인 버튼을 누르세요!", "조건범위 선택", Type:=8) '조건범위 InputBox로 반환
     Set rngCopy = Sheets(2).Range("A1").CurrentRegion '복사위치 설정
     
     '//고급필터 실행
-    rngDB.AdvancedFilter Action:=xlFilterCopy, _
-        criteriarange:=rngCriteria, _
+    rngDB.AdvancedFilter _
+        Action:=xlFilterCopy, _
+        CriteriaRange:=rngCriteria, _
         copytorange:=rngCopy, _
         Unique:=False '고유목록만 가져오려면 True
     
