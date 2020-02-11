@@ -38,14 +38,14 @@ Sub CollectData()
     '//폴더 내의 엑셀파일을 불러오고, 파일이 없으면 매크로 종료
     rawFile = Dir(rawPath & "*.xls*")
     If rawFile = "" Then
-        MsgBox "선택하실 폴더에 파일이 없습니다.", vbInformation, banner
+        MsgBox "선택한 폴더에 파일이 없습니다.", vbInformation, banner
         Exit Sub
     End If
     
     '//폴더 내 모든 엑셀파일을 순환
     cntFile = 0
     Do While rawFile <> ""
-        Workbooks.Open Filename:=rawPath & rawFile
+        Workbooks.Open FileName:=rawPath & rawFile
         Set rngDB = ActiveSheet.Range("A1").CurrentRegion
         rngDB.Offset(1).Resize(rngDB.Rows.Count - 1).Copy
         Workbooks(taskFile).Activate
@@ -69,5 +69,6 @@ Sub CollectData()
     Range("A1").Activate
     MsgBox cntFile & "개의 파일에서 자료 수합을 완료하였습니다.", vbInformation, banner
 End Sub
+
 
 
