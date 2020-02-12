@@ -30,14 +30,15 @@ End Sub
 '  사용자 이름 지정
 '------------------------
 Sub setUserName(userNM As String)
+    Dim argURNM As String
 
     If MsgBox("이 프로그램에서 사용할 사용자의 이름을 " & userNM & "으로 하겠습니까?", vbQuestion + vbYesNo, banner) = vbNo Then
         Do
-            Application.UserName = InputBox("담당자의 이름을 입력해 주세요.", banner, Application.UserName)
-            userNM = Application.UserName
-        Loop Until userNM <> vbNullString
+            argURNM = InputBox("담당자의 이름을 입력해 주세요.", banner, Application.UserName)
+        Loop Until argURNM <> vbNullString
     End If
-    MsgBox "이 프로그램 사용자의 이름을 '" & userNM & "'으로 지정하였습니다.", vbInformation, banner
+    Application.UserName = argURNM
+    MsgBox "이 프로그램 사용자의 이름을 '" & argURNM & "'으로 지정하였습니다.", vbInformation, banner
 
 End Sub
 
