@@ -41,7 +41,7 @@ Sub aryData2()
     '//배열 데이터를 엑셀에 반환(수평방향)
     ActiveSheet.Cells(1, 1).Resize(1, 10).Value = mydata
     '//배열 데이터를 엑셀에 반환(수직방향)
-    ActiveSheet.Cells(1, 1).Resize(10, 1).Value = mydata 'Application.WorksheetFunction.Transpose(mydata)
+    ActiveSheet.Cells(1, 1).Resize(10, 1).Value = Application.WorksheetFunction.Transpose(mydata)
     
     '//데이터 범위의 비어있는 영역(B2:J10)에 99단 입력
     For i = 1 To 9
