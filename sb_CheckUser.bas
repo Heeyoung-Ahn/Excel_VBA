@@ -36,9 +36,9 @@ Sub setUserName(userNM As String)
         Do
             argURNM = InputBox("담당자의 이름을 입력해 주세요.", banner, Application.UserName)
         Loop Until argURNM <> vbNullString
+        Application.UserName = argURNM
     End If
-    Application.UserName = argURNM
-    MsgBox "이 프로그램 사용자의 이름을 '" & argURNM & "'으로 지정하였습니다.", vbInformation, banner
+    MsgBox "이 프로그램 사용자의 이름을 '" & Application.UserName & "'으로 지정하였습니다.", vbInformation, banner
 
 End Sub
 
