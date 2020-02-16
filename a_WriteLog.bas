@@ -12,7 +12,7 @@ Sub writeLog(ProcedureNM As String, tableNM As String, SQLScript As String, Erro
     Dim strSQL As String
     connectTaskDB
     
-    strSQL = "INSERT INTO co_account.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
+    strSQL = "INSERT INTO log.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
                   "Values(" & SText(ProcedureNM) & ", " & _
                                     SText(tableNM) & ", " & _
                                     SText(SQLScript) & ", " & _
@@ -22,7 +22,7 @@ Sub writeLog(ProcedureNM As String, tableNM As String, SQLScript As String, Erro
                                     affectedCount & ", " & _
                                     user_id & ");"
 
-    executeSQL "writeLog", "log_table_name", strSQL, formNM, "로그기록"
+    executeSQL "writeLog", "log.logs", strSQL, , "로그기록"
     disconnectDB
 End Sub
 
