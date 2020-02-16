@@ -2,17 +2,17 @@ Attribute VB_Name = "A_Common"
 Option Explicit
 
 Public Const Banner As String = "프로그램 명칭"
-Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver"
-Public Const programv As String = "Program Version"
-Public conn As ADODB.Connection
-Public rs As New ADODB.Recordset
-Public connIP As String, connDB As String, connUN As String, connPW As String '//Task DB 연결 정보
+Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC에 설치된 ODBC Driver
+Public Const programv As String = "Program Version" '프로그램 버전 관리
+Public conn As ADODB.Connection 'ADO Connection 개체 변수
+Public rs As New ADODB.Recordset 'ADO Recordset 개체 변수
+Public connIP As String, connDB As String, connUN As String, connPW As String 'Task DB 연결 정보
 Public user_id As Integer '사용자코드
 Public user_gb As String '사용자구분(SA, AM, MG, WP)
 Public user_nm As String '사용자이름
 Public checkLogin As Integer '로그인 여부 0: 로그인 안함, 1 = 로그인
-Public Const commonPW As String = "Password"
-Public cuCode As Integer, pjCode As Integer
+Public Const commonPW As String = "Password" 'Common DB 비밀번호
+Public cuCode As Integer, pjCode As Integer 'Project Levle 변수
 
 '-----------------------
 '  Common DB연결
@@ -62,6 +62,7 @@ End Sub
 '    - executeSQL(프로시져명, 테이블명, SQL문, 폼이름(옵션), 잡이름(옵션))
 '    - SQL문 실행 결과 성공 여부를 알기 위해 영향 받은 레코드 수 검토
 '    - 오류발생 시 에러 핸들링 및 로그 기록
+'    - 오류발생 안하면 잡 수행 프로시저에서 로그 기록
 '-------------------------------------------------------------------------------------
 Public Function executeSQL(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "기타") As Long
 On Error GoTo ErrHandler
