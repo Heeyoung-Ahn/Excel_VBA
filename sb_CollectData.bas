@@ -12,84 +12,94 @@ Public Const banner As String = "파일수합프로그램"
 '----------------------------------------------------
 Sub CollectData()
 
+    '//변수선언
     Dim rawPath As String, rawFile As String
     Dim taskFile As String, taskSht As String
-    Dim cntFile As Integer, cntC As Integer, i As Integer
-    Dim oldFieldNM() As String, newFieldNM() As String
+    Dim taskFieldNM() As Variant, rawFieldNM() As Variant
+    Dim cntTC As Integer, cntRC As Integer, cntR As Long, i As Integer
     Dim rngDB As Range
-    Dim cntR As Long
+    Dim cntFile As Integer
     
     Application.ScreenUpdating = False
     
     '//변수설정
-    taskFile = ThisWorkbook.Name
-    taskSht = "Data" '작업시트이름 ★★
-    
-    '//수합파일 필드명 oldFieldNM 배열에 반환
-    cntC = Sheets(taskSht).Range("A1").CurrentRegion.Columns.Count
-    ReDim oldFieldNM(cntC - 1)
-    For i = 0 To cntC - 1
-        oldFieldNM(i) = Sheets(taskSht).Range("A1").Offset(0, i).Value
+    taskFile = "파일수합샘플.xlsm"
+    taskSht = "Data"
+        
+    '//taskfile 구조 배열에 반환
+    Set rngDB = Sheets(taskSht).Range("A1").CurrentRegion.Rows(1)
+    cntTC = rngDB.Columns.Count
+    ReDim taskFieldNM(1 To cntTC)
+    For i = 1 To cntTC
+        taskFieldNM(i) = rngDB.Cells(1, 1).Offset(0, i - 1).Value
     Next i
        
     '//기존자료 삭제
-    Sheets(taskSht).UsedRange.Offset(1).ClearContents
-    
-    '//폴더 선택
+    Sheets(taskSht).Range("A1").CurrentRegion.Offset(1).ClearContents
+        
+    '//raw folder
     With Application.FileDialog(msoFileDialogFolderPicker)
         .Show
         If .SelectedItems.Count = 0 Then Exit Sub
         rawPath = .SelectedItems(1) & Application.PathSeparator
     End With
-    
-    '//폴더 내의 엑셀파일을 불러오고, 파일이 없으면 매크로 종료
+        
+    '//rawfile check
     rawFile = Dir(rawPath & "*.xls*")
-    If rawFile = "" Then
-        MsgBox "선택한 폴더에 파일이 없습니다.", vbInformation, banner
+    If Len(rawFile) = 0 Then
+        MsgBox "선택한 폴더에 엑셀 파일이 없습니다.", vbInformation, banner
         Exit Sub
     End If
     
-    '//폴더 내 모든 엑셀파일을 순환
+    '//loop
     cntFile = 0
-    Do While rawFile <> ""
-        Workbooks.Open FileName:=rawPath & rawFile
-        Set rngDB = ActiveSheet.Range("A1").CurrentRegion
-        '수합대상 파일 필드명 newFieldNM 배열에 반환
-        cntC = rngDB.Columns.Count
-        ReDim newFieldNM(cntC - 1)
-        For i = 0 To cntC - 1
-            newFieldNM(i) = rngDB.Cells(1, 1).Offset(0, i).Value
+    Do
+        Workbooks.Open Filename:=rawPath & rawFile
+        Set rngDB = Sheets(1).Range("A1").CurrentRegion.Rows(1)
+        cntRC = rngDB.Columns.Count
+        'rawfile 구조 배열에 반환
+        ReDim rawFieldNM(1 To cntRC)
+        For i = 1 To cntRC
+            rawFieldNM(i) = rngDB.Cells(1, 1).Offset(0, i - 1).Value
         Next i
-        '구조 비교
-        For i = 0 To cntC - 1
-            If oldFieldNM(i) <> newFieldNM(i) Then
-                MsgBox rawFile & "의 구조가 수합파일의 구조와 다릅니다." & vbNewLine & _
-                    "이 파일은 수합하지 않고 건너뜁니다." & vbNewLine & _
-                    "나중에 확인하세요.", vbCritical, banner
-                cntFile = cntFile - 1
+        '구조비교1: 필드수
+        If cntTC <> cntRC Then
+            MsgBox rawFile & "의 필드 수가 TaskFile의 필드 수와 다릅니다." & vbNewLine & _
+                    "다음 파일로 건너뜁니다.", vbCritical, banner
+                GoTo nextFile:
+        End If
+        '구조비교2: 필드명
+        For i = 1 To cntTC
+            If taskFieldNM(i) <> rawFieldNM(i) Then
+                MsgBox rawFile & "의 필드명이 TaskFile의 필드명과 다릅니다." & vbNewLine & _
+                    "다음 파일로 건너뜁니다.", vbCritical, banner
                 GoTo nextFile:
             End If
         Next i
+        
         '자료 수합
-        rngDB.Offset(1).Resize(rngDB.Rows.Count - 1).Copy
+        rngDB.CurrentRegion.Offset(1).Resize(rngDB.CurrentRegion.Rows.Count - 1).Copy
         Workbooks(taskFile).Activate
         Sheets(taskSht).Cells(Rows.Count, "A").End(xlUp).Offset(1).PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
-        Workbooks(rawFile).Close savechanges:=False
-nextFile:
-        '정리
-        Set rngDB = Nothing
-        rawFile = Dir()
         cntFile = cntFile + 1
-    Loop
+        
+nextFile:
+        '파일정리
+        Workbooks(rawFile).Close savechanges:=False
+        
+        '다음파일
+        rawFile = Dir()
+    Loop Until rawFile = ""
     
     '//찌꺼기 제거
     Set rngDB = Range("A1").CurrentRegion
     cntR = rngDB.Rows.Count
     Cells(Rows.Count, 1).End(xlUp).Offset(1).Resize(Rows.Count - cntR).Delete shift:=xlUp
     
-    '//마무리
     Application.ScreenUpdating = True
+    
+    '//작업보고
     Range("A1").Activate
-    MsgBox cntFile & "개의 파일에서 자료 수합을 완료하였습니다.", vbInformation, banner
+    MsgBox cntFile & "개의 파일 수합 완료", vbInformation
 End Sub
