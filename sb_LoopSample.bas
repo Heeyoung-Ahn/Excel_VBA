@@ -20,7 +20,7 @@ Sub ForNextDemo2()
     For i = 2 To 20 Step 2
         lngEven = lngEven + i
     Next i
-    MsgBox "2ë¶€í„° 20ê¹Œì§€ì˜ ìˆ«ì ì¤‘ ì§ìˆ˜ì˜ í•©ê³„ëŠ” " & lngEven & "ì…ë‹ˆë‹¤."
+    MsgBox "2ºÎÅÍ 20±îÁöÀÇ ¼ıÀÚ Áß Â¦¼öÀÇ ÇÕ°è´Â " & lngEven & "ÀÔ´Ï´Ù."
 End Sub
 
 Sub ForEachNextDemo3()
@@ -28,11 +28,11 @@ Sub ForEachNextDemo3()
     
     For Each sht In Worksheets
         If UCase(sht.Name) = UCase("sheet1") Then
-            MsgBox "í•´ë‹¹ ì‹œíŠ¸ê°€ ì¡´ì¬í•©ë‹ˆë‹¤."
+            MsgBox "ÇØ´ç ½ÃÆ®°¡ Á¸ÀçÇÕ´Ï´Ù."
             Exit Sub
         End If
     Next sht
-     MsgBox "í•´ë‹¹ ì‹œíŠ¸ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."
+     MsgBox "ÇØ´ç ½ÃÆ®°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù."
 End Sub
 
 Sub ForEachNextDemo1()
@@ -54,17 +54,17 @@ Sub DoUntilDemo()
     Dim rngDB As Range, rngA As Range
     Dim cntR As Integer, cntC As Integer, i As Integer
             
-    '//ì˜ì—­ì„¤ì •
+    '//¿µ¿ª¼³Á¤
     Set rngDB = Sheets("DB").UsedRange
     cntR = rngDB.Rows.Count
     cntC = rngDB.Columns.Count
     
-    '//ì‚¬ì›ëª…ì„ ì´ë¦„ê³¼ ì§ì±…ìœ¼ë¡œ ë¶„ë¦¬
-    Set rngA = rngDB.Resize(1).Find("ì‚¬ì›ëª…", lookat:=xlWhole)
-    '[ì§ì±…í•„ë“œì¶”ê°€]
+    '//»ç¿ø¸íÀ» ÀÌ¸§°ú Á÷Ã¥À¸·Î ºĞ¸®
+    Set rngA = rngDB.Resize(1).Find("»ç¿ø¸í", lookat:=xlWhole)
+    '[Á÷Ã¥ÇÊµåÃß°¡]
     rngA.Offset(0, 1).EntireColumn.Insert
-    rngA.Offset(0, 1).Value = "ì§ì±…"
-    '[ì‚¬ì›ëª…, ì§ì±… ë°ì´í„° ë¶„ë¦¬]
+    rngA.Offset(0, 1).Value = "Á÷Ã¥"
+    '[»ç¿ø¸í, Á÷Ã¥ µ¥ÀÌÅÍ ºĞ¸®]
     i = 1
     Do
         rngA.Offset(i, 1).Value = Right(rngA.Offset(i).Value, Len(rngA.Offset(i)) - InStr(rngA.Offset(i).Value, " "))
@@ -72,4 +72,3 @@ Sub DoUntilDemo()
         i = i + 1
     Loop Until rngA.Offset(i) = vbNullString
 End Sub
-
