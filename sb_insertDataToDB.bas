@@ -47,12 +47,8 @@ Sub insertDataToDB()
     Dim cntField As Integer, cntRecord As Long, i As Integer, j As Long, k As Integer
     
     '//Sheet명, Table명 입력 받기
-    Do
-        shtNM = InputBox("DB로 업로드할 엑셀 시트 이름을 입력하세요.", banner)
-    Loop Until shtNM <> ""
-    Do
-        tableNM = InputBox("엑셀 자료를 업로드할 DB Table명을 입력하세요.", banner, "예) common.users")
-    Loop Until tableNM <> ""
+    shtNM = "ch_accounts" '//수정★★
+    tableNM = "church_account.accounts" '//수정★★
     
     connectTaskDB
     
