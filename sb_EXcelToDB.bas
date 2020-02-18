@@ -85,6 +85,7 @@ Sub insertDataToDB()
     Next i
     
     '//레코드별로 Insert(수정★★)
+    '  - 필드 수 만큼 추가해서 진행
     '  - 공백대신 NULL값을 넣고자 할 경우 "''"을 "NULL"로 수정
     '  - 기본값을 넣으려면 "Default" & "," & _
     '  - TimeStamp를 넣으려면: "CURRENT_TIMESTAMP()" & ");"
