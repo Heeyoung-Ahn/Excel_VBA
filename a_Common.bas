@@ -1,9 +1,11 @@
 Attribute VB_Name = "A_Common"
 Option Explicit
 
-Public Const Banner As String = "프로그램 명칭"
+Public Const banner As String = "프로그램 명칭" '★★
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC에 설치된 ODBC Driver
-Public Const programv As String = "Program Version" '프로그램 버전 관리
+Public Const programv As String = "Program Version" '프로그램 버전 관리★★
+Public Const IPAddress As String = "IP주소" 'DB IP Address★★
+Public Const commonPW As String = "Password" 'Common DB 비밀번호★★
 Public conn As ADODB.Connection 'ADO Connection 개체 변수
 Public rs As New ADODB.Recordset 'ADO Recordset 개체 변수
 Public connIP As String, connDB As String, connUN As String, connPW As String 'Task DB 연결 정보
@@ -11,14 +13,13 @@ Public user_id As Integer '사용자코드
 Public user_gb As String '사용자구분(SA, AM, MG, WP)
 Public user_nm As String '사용자이름
 Public checkLogin As Integer '로그인 여부 0: 로그인 안함, 1 = 로그인
-Public Const commonPW As String = "Password" 'Common DB 비밀번호
-Public cuCode As Integer, pjCode As Integer 'Project Levle 변수
+Public cuCode As Integer, pjCode As Integer 'Project Levle 변수★★
 
 '-----------------------
 '  Common DB연결
 '-----------------------
 Sub connectCommonDB()
-    connectDB "IP Address", "DB Name", "ID", commonPW
+    connectDB IPAddress, "DB Name", "ID", commonPW
 End Sub
 
 '-------------------
