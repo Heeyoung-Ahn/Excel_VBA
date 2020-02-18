@@ -9,13 +9,23 @@ Public conn As ADODB.Connection
 Public rs As New ADODB.Recordset
 
 '-----------------------------------------------
-'  DB연결 프로시저
+'  DB연결
 '    - connectDB(서버 IP, 스키마, ID, PW)
 '-----------------------------------------------
 Sub connectDB(argIP As String, argDB As String, argID As String, argPW As String)
     Set conn = New ADODB.Connection
     conn.ConnectionString = "Driver={" & ODBCDriver & "};Server=" & argIP & ";Port=3306;Database=" & argDB & ";User=" & argID & ";Password=" & argPW & ";Option=2;"
     conn.Open
+End Sub
+
+'-----------------
+'  DB연결끊기
+'-----------------
+Sub disconnectDB()
+    On Error Resume Next
+        conn.Close
+        Set conn = Nothing
+    On Error GoTo 0
 End Sub
 
 '------------------------------------------------------------------
@@ -93,7 +103,6 @@ Sub insertDataToDB()
     MsgBox k & "개의 레코드가 '" & tableNM & "'에 추가되었습니다.", vbInformation, banner
     
     '//연결 끊기
-    conn.Close
-    Set conn = Nothing
+    disconnectDB
 End Sub
 
