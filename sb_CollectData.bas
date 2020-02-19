@@ -13,7 +13,7 @@ Public Const banner As String = "파일수합프로그램"
 Sub CollectData()
 
     '//변수선언
-    Dim rawPath As String, rawFile As String
+    Dim rawPath As String, rawFile As String, rawSht As String
     Dim taskFile As String, taskSht As String
     Dim taskFieldNM() As Variant, rawFieldNM() As Variant
     Dim cntTC As Integer, cntRC As Integer, cntR As Long, i As Integer
@@ -25,6 +25,7 @@ Sub CollectData()
     '//변수설정
     taskFile = "파일수합샘플.xlsm"
     taskSht = "Data"
+    rawSht = "Sheet1"
         
     '//taskfile 구조 배열에 반환
     Set rngDB = Sheets(taskSht).Range("A1").CurrentRegion.Rows(1)
@@ -55,7 +56,7 @@ Sub CollectData()
     cntFile = 0
     Do
         Workbooks.Open Filename:=rawPath & rawFile
-        Set rngDB = Sheets(1).Range("A1").CurrentRegion.Rows(1)
+        Set rngDB = Sheets(rawSht).Range("A1").CurrentRegion.Rows(1)
         cntRC = rngDB.Columns.Count
         'rawfile 구조 배열에 반환
         ReDim rawFieldNM(1 To cntRC)
