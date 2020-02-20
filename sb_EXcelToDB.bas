@@ -1,52 +1,12 @@
 Attribute VB_Name = "sb_EXcelToDB"
 Option Explicit
 
-Public Const banner As String = "Excel To Database Tool V1.0"
+Public Const banner As String = "Database To Excel Tool V1.0"
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver"
 Public Const IPAddress As String = "IP주소" 'DB IP Address★★
-Public Const DBPassword As String = "Password" 'SA 비밀번호★★
+Public Const DBPassword As String = "Password" '비밀번호★★
 Public conn As ADODB.Connection
 Public rs As New ADODB.Recordset
-
-'-----------------------------------------------
-'  DB연결
-'    - connectDB(서버 IP, 스키마, ID, PW)
-'-----------------------------------------------
-Sub connectDB(argIP As String, argDB As String, argID As String, argPW As String)
-    Set conn = New ADODB.Connection
-    conn.ConnectionString = "Driver={" & ODBCDriver & "};Server=" & argIP & ";Port=3306;Database=" & argDB & ";User=" & argID & ";Password=" & argPW & ";Option=2;"
-    conn.Open
-End Sub
-
-'-----------------
-'  DB연결끊기
-'-----------------
-Sub disconnectDB()
-    On Error Resume Next
-        conn.Close
-        Set conn = Nothing
-    On Error GoTo 0
-End Sub
-
-'------------------------------------------------------------------
-'  SQL문을 실행하고 실행결과 영향을 받은 레코드 수를 반환
-'------------------------------------------------------------------
-Public Function excuteSQL(SQLScript As String) As Long
-    Dim affectedCount As Long
-    conn.Execute CommandText:=SQLScript, recordsaffected:=affectedCount
-    excuteSQL = affectedCount
-End Function
-
-'------------------------------------------------
-'  SQL 스칼라매칭 검색어 처리('검색어')
-'------------------------------------------------
-Public Function SText(argString As Variant) As String
-    If argString = "" Or Len(argString) = 0 Then
-        SText = "''"
-    Else
-        SText = "'" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "'"
-    End If
-End Function
 
 '---------------------------------------------------
 '  엑셀 자료를 DB에 Insert
@@ -55,18 +15,18 @@ End Function
 '----------------------------------------------------
 Sub insertDataToDB()
     
-    Dim shtNM As String, tableNM As String, DBNM As String, strSQL As String
+    Dim shtNM As String, tableNM As String, dbNM As String, strSQL As String
     Dim affectedCount As Long
     Dim Values() As String
     Dim cntField As Integer, cntRecord As Long, i As Integer, j As Long, k As Integer
     
-    '//Sheet명, Table명 입력 받기
+    '//Sheet명, Table명, db명 설정
     shtNM = "ch_accounts" '//수정★★
     tableNM = "church_account.accounts" '//수정★★
-    DBNM = "account" '//수정★★
+    dbNM = "account" '//수정★★
     
     '//DB연결
-    connectDB IPAddress, DBNM, "root", DBPassword
+    connectDB IPAddress, dbNM, "root", DBPassword
     
     '//Table 초기화
     strSQL = "TRUNCATE TABLE " & tableNM
@@ -108,3 +68,42 @@ Sub insertDataToDB()
     disconnectDB
 End Sub
 
+'-----------------------------------------------
+'  DB연결
+'    - connectDB(서버 IP, 스키마, ID, PW)
+'-----------------------------------------------
+Sub connectDB(argIP As String, argDB As String, argID As String, argPW As String)
+    Set conn = New ADODB.Connection
+    conn.ConnectionString = "Driver={" & ODBCDriver & "};Server=" & argIP & ";Port=3306;Database=" & argDB & ";User=" & argID & ";Password=" & argPW & ";Option=2;"
+    conn.Open
+End Sub
+
+'-----------------
+'  DB연결끊기
+'-----------------
+Sub disconnectDB()
+    On Error Resume Next
+        conn.Close
+        Set conn = Nothing
+    On Error GoTo 0
+End Sub
+
+'------------------------------------------------------------------
+'  SQL문을 실행하고 실행결과 영향을 받은 레코드 수를 반환
+'------------------------------------------------------------------
+Public Function excuteSQL(SQLScript As String) As Long
+    Dim affectedCount As Long
+    conn.Execute CommandText:=SQLScript, recordsaffected:=affectedCount
+    excuteSQL = affectedCount
+End Function
+
+'------------------------------------------------
+'  SQL 스칼라매칭 검색어 처리('검색어')
+'------------------------------------------------
+Public Function SText(argString As Variant) As String
+    If argString = "" Or Len(argString) = 0 Then
+        SText = "''"
+    Else
+        SText = "'" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "'"
+    End If
+End Function
