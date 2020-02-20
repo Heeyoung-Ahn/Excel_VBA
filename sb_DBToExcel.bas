@@ -8,12 +8,12 @@ Public Const DBPassword As String = "Password" '비밀번호★★
 Public conn As ADODB.Connection
 Public rs As New ADODB.Recordset
 
-'-----------------------------------------------------------------------------
-'  DB에서 Select문으로 검색한 자료를 레코드셋에 담아서 엑셀에 반환
+'-----------------------------------------------
+'  DB 자료를 엑셀에 반환
 '    - excel_export(파일오픈여부)
 '    - 워크북을 만들어서 바탕화면에 저장
 '    - 파일오픈이 true면 저장 후 열기
-'-----------------------------------------------------------------------------
+'------------------------------------------------
 Sub excel_export(Optional FileOpen As Boolean = False)
     
     Dim tableNM As String, dbNM As String
