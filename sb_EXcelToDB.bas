@@ -55,7 +55,7 @@ End Function
 '----------------------------------------------------
 Sub insertDataToDB()
     
-    Dim shtNM As String, tableNM As String, strSQL As String
+    Dim shtNM As String, tableNM As String, DBNM As String, strSQL As String
     Dim affectedCount As Long
     Dim Values() As String
     Dim cntField As Integer, cntRecord As Long, i As Integer, j As Long, k As Integer
@@ -63,9 +63,10 @@ Sub insertDataToDB()
     '//Sheet명, Table명 입력 받기
     shtNM = "ch_accounts" '//수정★★
     tableNM = "church_account.accounts" '//수정★★
+    DBNM = "account" '//수정★★
     
     '//DB연결
-    connectDB IPAddress, "common", "root", DBPassword
+    connectDB IPAddress, DBNM, "root", DBPassword
     
     '//Table 초기화
     strSQL = "TRUNCATE TABLE " & tableNM
