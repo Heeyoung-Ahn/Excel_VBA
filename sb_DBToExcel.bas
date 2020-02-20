@@ -41,7 +41,7 @@ Sub excel_export(Optional FileOpen As Boolean = False)
     End If
         
     '//엑셀로 자료 내보내기
-    Optimization
+    'Optimization
     Workbooks.Add
     For i = i To rs.Fields.Count - 1
         Cells(1, 1).Offset(0, i).Value = rs.Fields(i).Name
@@ -49,11 +49,13 @@ Sub excel_export(Optional FileOpen As Boolean = False)
     Cells(2, 1).CopyFromRecordset rs
     Cells(1.1).CurrentRegion.Columns.AutoFit
     fileNM = GetDesktopPath() & tableNM & "(" & Format(Date, "yyyymmdd") & "_" & Format(Time, "hhmm") & ")" & ".xlsx"
-    ActiveWorkbook.SaveAs Filename:=fileNM
+    Application.DisplayAlerts = False
+        ActiveWorkbook.SaveAs Filename:=fileNM
+    Application.DisplayAlerts = True
     If FileOpen = False Then
         ActiveWorkbook.Close
     End If
-    Normal
+    'Normal
     
     '//결과보고, 마무리
     fileSNM = Right(fileNM, Len(fileNM) - InStrRev(fileNM, "\"))
