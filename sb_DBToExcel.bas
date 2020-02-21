@@ -1,7 +1,7 @@
 Attribute VB_Name = "sb_DBToExcel"
 Option Explicit
 
-Public Const banner As String = "Excel To Database Tool V1.0"
+Public Const banner As String = "Database To Excel Tool V1.0"
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver"
 Public Const IPAddress As String = "IP주소" 'DB IP Address★★
 Public Const DBPassword As String = "Password" '비밀번호★★
@@ -43,7 +43,7 @@ Sub excel_export(Optional FileOpen As Boolean = False)
     '//엑셀로 자료 내보내기
     'Optimization
     Workbooks.Add
-    For i = i To rs.Fields.Count - 1
+    For i = 0 To rs.Fields.Count - 1
         Cells(1, 1).Offset(0, i).Value = rs.Fields(i).Name
     Next i
     Cells(2, 1).CopyFromRecordset rs
