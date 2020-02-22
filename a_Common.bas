@@ -51,12 +51,10 @@ End Sub
 '---------------------------------------------------------------------
 Sub callDBtoRS(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "데이터 조회")
 On Error GoTo ErrHandler
-
     Set rs = New ADODB.Recordset
     rs.CursorLocation = adUseClient
     rs.Open Source:=SQLScript, ActiveConnection:=conn, CursorType:=adOpenForwardOnly, LockType:=adLockReadOnly, Options:=adCmdText
     Exit Sub
-    
 ErrHandler:
     ErrHandle ProcedureNM, tableNM, SQLScript, formNM, JobNM
     writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//오류코드 1
@@ -71,13 +69,10 @@ End Sub
 '-------------------------------------------------------------------------------------
 Public Function executeSQL(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "기타") As Long
 On Error GoTo ErrHandler
-
     Dim affectedCount As Long
-    
     conn.Execute CommandText:=SQLScript, recordsaffected:=affectedCount
     executeSQL = affectedCount
     Exit Function
-    
 ErrHandler:
     ErrHandle ProcedureNM, tableNM, SQLScript, formNM, JobNM
     writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//오류코드 1
