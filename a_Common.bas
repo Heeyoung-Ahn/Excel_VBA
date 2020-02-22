@@ -5,6 +5,8 @@ Public Const banner As String = "프로그램 명칭" '★★
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC에 설치된 ODBC Driver
 Public Const programv As String = "Program Version" '프로그램 버전 관리★★
 Public Const IPAddress As String = "IP주소" 'DB IP Address★★
+Public Const commonDB As String = "common" 'Common DB명★★
+Public Const commpnID As String = "common" 'Common DB UN★★
 Public Const commonPW As String = "Password" 'Common DB 비밀번호★★
 Public conn As ADODB.Connection 'ADO Connection 개체 변수
 Public rs As New ADODB.Recordset 'ADO Recordset 개체 변수
@@ -15,11 +17,13 @@ Public user_nm As String '사용자이름
 Public checkLogin As Integer '로그인 여부 0: 로그인 안함, 1 = 로그인
 Public cuCode As Integer, pjCode As Integer 'Project Levle 변수★★
 
-'-----------------------
+'-------------------------------
 '  Common DB연결
-'-----------------------
+'    - 로그인 체크
+'    - TaskDB접속 정보 반환
+'-------------------------------
 Sub connectCommonDB()
-    connectDB IPAddress, "DB Name", "ID", commonPW
+    connectDB IPAddress, commonDB, commpnID, commonPW
 End Sub
 
 '-------------------
