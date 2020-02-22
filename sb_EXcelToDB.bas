@@ -1,7 +1,7 @@
 Attribute VB_Name = "sb_EXcelToDB"
 Option Explicit
 
-Public Const banner As String = "Database To Excel Tool V1.0"
+Public Const banner As String = "Excel To Database Tool V1.0"
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver"
 Public Const IPAddress As String = "IP주소" 'DB IP Address★★
 Public Const DBPassword As String = "Password" '비밀번호★★
