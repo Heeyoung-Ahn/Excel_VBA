@@ -8,11 +8,11 @@ Option Explicit
 '    - writelog(프로시저명, 테이블명, SQL, 에러코드, 폼이름, 잡이름, 영향받은레코드수)
 '-----------------------------------------------------------------------------------------------------
 Sub writeLog(ProcedureNM As String, tableNM As String, SQLScript As String, ErrorCD As Integer, Optional formNM As String = "NULL", Optional JobNM As String = "NULL", _
-                     Optional affectedCount As Integer = 0)
+                     Optional affectedCount As Long = 0)
     Dim strSQL As String
-    connectTaskDB
+    connectCommonDB
     
-    strSQL = "INSERT INTO log.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
+    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
                   "Values(" & SText(ProcedureNM) & ", " & _
                                     SText(tableNM) & ", " & _
                                     SText(SQLScript) & ", " & _
@@ -22,7 +22,7 @@ Sub writeLog(ProcedureNM As String, tableNM As String, SQLScript As String, Erro
                                     affectedCount & ", " & _
                                     user_id & ");"
 
-    executeSQL "writeLog", "log.logs", strSQL, , "로그기록"
+    executeSQL "writeLog", "common.logs", strSQL, , "로그기록"
     disconnectDB
 End Sub
 
