@@ -12,6 +12,7 @@ Log In UserForm
 	- a.Common.bas
 	- a.ErrHandler.bas
 	- a.WrigeLog.bas
+	- a.Ribbon.bas
 	- s_setGlobalVariant.bas
 	- fn_GetLocalIPaddress.bas
 	- fn_InputboxPW.bas
