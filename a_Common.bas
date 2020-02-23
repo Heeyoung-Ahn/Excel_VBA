@@ -1,41 +1,41 @@
 Attribute VB_Name = "a_Common"
 Option Explicit
 
-Public Const banner As String = "í”„ë¡œê·¸ë¨ ëª…ì¹­" 'â˜…â˜…
-Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PCì— ì„¤ì¹˜ëœ ODBC Driver
-Public Const programv As String = "Program Version" 'í”„ë¡œê·¸ë¨ ë²„ì „ ê´€ë¦¬â˜…â˜…
-Public Const IPAddress As String = "IPì£¼ì†Œ" 'DB IP Addressâ˜…â˜…
-Public Const commonDB As String = "common" 'Common DBëª…â˜…â˜…
-Public Const commpnID As String = "common" 'Common DB UNâ˜…â˜…
-Public Const commonPW As String = "Password" 'Common DB ë¹„ë°€ë²ˆí˜¸â˜…â˜…
-Public conn As ADODB.Connection 'ADO Connection ê°œì²´ ë³€ìˆ˜
-Public rs As New ADODB.Recordset 'ADO Recordset ê°œì²´ ë³€ìˆ˜
-Public connIP As String, connDB As String, connUN As String, connPW As String 'Task DB ì—°ê²° ì •ë³´
-Public user_id As Integer 'ì‚¬ìš©ìì½”ë“œ
-Public user_gb As String 'ì‚¬ìš©ìêµ¬ë¶„(SA, AM, MG, WP)
-Public user_nm As String 'ì‚¬ìš©ìì´ë¦„
-Public checkLogin As Integer 'ë¡œê·¸ì¸ ì—¬ë¶€ 0: ë¡œê·¸ì¸ ì•ˆí•¨, 1 = ë¡œê·¸ì¸
-Public cuCode As Integer, pjCode As Integer 'Project Levle ë³€ìˆ˜â˜…â˜…
+Public Const banner As String = "ÇÁ·Î±×·¥ ¸íÄª" '¡Ú¡Ú
+Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC¿¡ ¼³Ä¡µÈ ODBC Driver¡Ú¡Ú
+Public Const programv As String = "Program Version" 'ÇÁ·Î±×·¥ ¹öÀü °ü¸®¡Ú¡Ú
+Public Const IPAddress As String = "IPÁÖ¼Ò" 'DB IP Address¡Ú¡Ú
+Public Const commonDB As String = "common" 'Common DB¸í¡Ú¡Ú
+Public Const commpnID As String = "common" 'Common DB UN¡Ú¡Ú
+Public Const commonPW As String = "Password" 'Common DB ºñ¹Ğ¹øÈ£¡Ú¡Ú
+Public conn As ADODB.Connection 'ADO Connection °³Ã¼ º¯¼ö
+Public rs As New ADODB.Recordset 'ADO Recordset °³Ã¼ º¯¼ö
+Public connIP As String, connDB As String, connUN As String, connPW As String 'Task DB ¿¬°á Á¤º¸
+Public user_id As Integer '»ç¿ëÀÚÄÚµå
+Public user_gb As String '»ç¿ëÀÚ±¸ºĞ(SA, AM, MG, WP)
+Public user_nm As String '»ç¿ëÀÚÀÌ¸§
+Public checkLogin As Integer '·Î±×ÀÎ ¿©ºÎ 0: ·Î±×ÀÎ ¾ÈÇÔ, 1 = ·Î±×ÀÎ
+Public cuCode As Integer, pjCode As Integer 'Project Levle º¯¼ö¡Ú¡Ú
 
 '-------------------------------
-'  Common DBì—°ê²°
-'    - ë¡œê·¸ì¸ ì²´í¬
-'    - TaskDBì ‘ì† ì •ë³´ ë°˜í™˜
+'  Common DB¿¬°á
+'    - ·Î±×ÀÎ Ã¼Å©
+'    - TaskDBÁ¢¼Ó Á¤º¸ ¹İÈ¯
 '-------------------------------
 Sub connectCommonDB()
     connectDB IPAddress, commonDB, commpnID, commonPW
 End Sub
 
 '-------------------
-'  Task DBì—°ê²°
+'  Task DB¿¬°á
 '-------------------
 Sub connectTaskDB()
     connectDB connIP, connDB, connUN, connPW
 End Sub
 
 '-----------------------------------------------
-'  DBì—°ê²° í”„ë¡œì‹œì €
-'    - connectDB(ì„œë²„ IP, ìŠ¤í‚¤ë§ˆ, ID, PW)
+'  DB¿¬°á ÇÁ·Î½ÃÀú
+'    - connectDB(¼­¹ö IP, ½ºÅ°¸¶, ID, PW)
 '-----------------------------------------------
 Sub connectDB(argIP As String, argDB As String, argID As String, argPW As String)
     Set conn = New ADODB.Connection
@@ -44,12 +44,12 @@ Sub connectDB(argIP As String, argDB As String, argID As String, argPW As String
 End Sub
 
 '---------------------------------------------------------------------
-'  ë ˆì½”ë“œì…‹ ì„¤ì • ë° ë°ì´í„° ë°˜í™˜
-'    - calDBtoRS(í”„ë¡œì‹œì €ëª…, í…Œì´ë¸”ëª…, SQLë¬¸, í¼ì´ë¦„, ì¡ì´ë¦„)
-'    - ì˜¤ë¥˜ë°œìƒ ì‹œ ì—ëŸ¬ í•¸ë“¤ë§ ë° ë¡œê·¸ ê¸°ë¡
-'    - ì˜¤ë¥˜ë°œìƒ ì•ˆí•˜ë©´ ì¡ ìˆ˜í–‰ í”„ë¡œì‹œì €ì—ì„œ ë¡œê·¸ ê¸°ë¡(í•„ìš” ì‹œ)
+'  ·¹ÄÚµå¼Â ¼³Á¤ ¹× µ¥ÀÌÅÍ ¹İÈ¯
+'    - calDBtoRS(ÇÁ·Î½ÃÀú¸í, Å×ÀÌºí¸í, SQL¹®, ÆûÀÌ¸§, ÀâÀÌ¸§)
+'    - ¿À·ù¹ß»ı ½Ã ¿¡·¯ ÇÚµé¸µ ¹× ·Î±× ±â·Ï
+'    - ¿À·ù¹ß»ı ¾ÈÇÏ¸é Àâ ¼öÇà ÇÁ·Î½ÃÀú¿¡¼­ ·Î±× ±â·Ï(ÇÊ¿ä ½Ã)
 '---------------------------------------------------------------------
-Sub callDBtoRS(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "ë°ì´í„° ì¡°íšŒ")
+Sub callDBtoRS(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "µ¥ÀÌÅÍ Á¶È¸")
 On Error GoTo ErrHandler
     Set rs = New ADODB.Recordset
     rs.CursorLocation = adUseClient
@@ -57,17 +57,17 @@ On Error GoTo ErrHandler
     Exit Sub
 ErrHandler:
     ErrHandle ProcedureNM, tableNM, SQLScript, formNM, JobNM
-    writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//ì˜¤ë¥˜ì½”ë“œ 1
+    writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//¿À·ùÄÚµå 1
 End Sub
 
 '-------------------------------------------------------------------------------------
-'  SQLë¬¸ì„ ì‹¤í–‰í•˜ê³  ì‹¤í–‰ê²°ê³¼ ì˜í–¥ì„ ë°›ì€ ë ˆì½”ë“œ ìˆ˜ë¥¼ ë°˜í™˜
-'    - executeSQL(í”„ë¡œì‹œì ¸ëª…, í…Œì´ë¸”ëª…, SQLë¬¸, í¼ì´ë¦„(ì˜µì…˜), ì¡ì´ë¦„(ì˜µì…˜))
-'    - SQLë¬¸ ì‹¤í–‰ ê²°ê³¼ ì„±ê³µ ì—¬ë¶€ë¥¼ ì•Œê¸° ìœ„í•´ ì˜í–¥ ë°›ì€ ë ˆì½”ë“œ ìˆ˜ ê²€í† 
-'    - ì˜¤ë¥˜ë°œìƒ ì‹œ ì—ëŸ¬ í•¸ë“¤ë§ ë° ë¡œê·¸ ê¸°ë¡
-'    - ì˜¤ë¥˜ë°œìƒ ì•ˆí•˜ë©´ ì¡ ìˆ˜í–‰ í”„ë¡œì‹œì €ì—ì„œ ë¡œê·¸ ê¸°ë¡
+'  SQL¹®À» ½ÇÇàÇÏ°í ½ÇÇà°á°ú ¿µÇâÀ» ¹ŞÀº ·¹ÄÚµå ¼ö¸¦ ¹İÈ¯
+'    - executeSQL(ÇÁ·Î½ÃÁ®¸í, Å×ÀÌºí¸í, SQL¹®, ÆûÀÌ¸§(¿É¼Ç), ÀâÀÌ¸§(¿É¼Ç))
+'    - SQL¹® ½ÇÇà °á°ú ¼º°ø ¿©ºÎ¸¦ ¾Ë±â À§ÇØ ¿µÇâ ¹ŞÀº ·¹ÄÚµå ¼ö °ËÅä
+'    - ¿À·ù¹ß»ı ½Ã ¿¡·¯ ÇÚµé¸µ ¹× ·Î±× ±â·Ï
+'    - ¿À·ù¹ß»ı ¾ÈÇÏ¸é Àâ ¼öÇà ÇÁ·Î½ÃÀú¿¡¼­ ·Î±× ±â·Ï
 '-------------------------------------------------------------------------------------
-Public Function executeSQL(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "ê¸°íƒ€") As Long
+Public Function executeSQL(ProcedureNM As String, tableNM As String, SQLScript As String, Optional formNM As String = "NULL", Optional JobNM As String = "±âÅ¸") As Long
 On Error GoTo ErrHandler
     Dim affectedCount As Long
     conn.Execute CommandText:=SQLScript, recordsaffected:=affectedCount
@@ -75,11 +75,11 @@ On Error GoTo ErrHandler
     Exit Function
 ErrHandler:
     ErrHandle ProcedureNM, tableNM, SQLScript, formNM, JobNM
-    writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//ì˜¤ë¥˜ì½”ë“œ 1
+    writeLog ProcedureNM, tableNM, SQLScript, 1, formNM, JobNM '//¿À·ùÄÚµå 1
 End Function
 
 '--------------------------
-'  DB ë° RS ì—°ê²° í•´ì œ
+'  DB ¹× RS ¿¬°á ÇØÁ¦
 '--------------------------
 Sub disconnectRS()
     On Error Resume Next
@@ -103,7 +103,7 @@ Sub disconnectALL()
 End Sub
 
 '------------------------------------------------
-'  SQL íŒ¨í„´ë§¤ì¹­ ê²€ìƒ‰ì–´ ì²˜ë¦¬('%ê²€ìƒ‰ì–´%')
+'  SQL ÆĞÅÏ¸ÅÄª °Ë»ö¾î Ã³¸®('%°Ë»ö¾î%')
 '------------------------------------------------
 Public Function PText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
@@ -114,7 +114,7 @@ Public Function PText(argString As Variant) As String
 End Function
 
 '---------------------------------------------
-'  SQL ìŠ¤ì¹¼ë¼ë§¤ì¹­ ê²€ìƒ‰ì–´ ì²˜ë¦¬('ê²€ìƒ‰ì–´')
+'  SQL ½ºÄ®¶ó¸ÅÄª °Ë»ö¾î Ã³¸®('°Ë»ö¾î')
 '---------------------------------------------
 Public Function SText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
@@ -125,7 +125,7 @@ Public Function SText(argString As Variant) As String
 End Function
 
 '--------------------
-'  ë§¤í¬ë¡œ ìµœì í™”
+'  ¸ÅÅ©·Î ÃÖÀûÈ­
 '--------------------
 Sub Optimization()
 On Error Resume Next
@@ -138,7 +138,7 @@ On Error GoTo 0
 End Sub
 
 '-------------------------
-'  ë§¤í¬ë¡œ ìµœì í™” ì›ë³µ
+'  ¸ÅÅ©·Î ÃÖÀûÈ­ ¿øº¹
 '-------------------------
 Sub Normal()
 On Error Resume Next
@@ -151,7 +151,7 @@ On Error GoTo 0
 End Sub
 
 '----------------
-'  ì „ì²´í™”ë©´On
+'  ÀüÃ¼È­¸éOn
 '----------------
 Sub FullscreenOn()
     ActiveWindow.DisplayHeadings = False
@@ -161,7 +161,7 @@ Sub FullscreenOn()
 End Sub
 
 '----------------
-'  ì „ì²´í™”ë©´Off
+'  ÀüÃ¼È­¸éOff
 '----------------
 Sub FullscreenOff()
     ActiveWindow.DisplayHeadings = True
@@ -171,14 +171,14 @@ Sub FullscreenOff()
 End Sub
 
 '---------------------
-'  ì—‘ì…€í™”ë©´ ìˆ¨ê¸°ê¸°
+'  ¿¢¼¿È­¸é ¼û±â±â
 '---------------------
 Sub HideExcel()
     Application.Visible = False
 End Sub
 
 '---------------------
-'  ì—‘ì…€í™”ë©´ ë³´ì´ê¸°
+'  ¿¢¼¿È­¸é º¸ÀÌ±â
 '---------------------
 Sub ShowExcel()
     Application.Visible = True
