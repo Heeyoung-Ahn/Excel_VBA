@@ -3,12 +3,12 @@ Log In UserForm
 1. Create DB Table
 	- common.users
 	- common.logs
-	- common.sql
+	# code: common.sql
 2. DB사용자
 	- common
 	- 권한: logs - insert / users - select, update
-	- grant_privileges_to_common_user.sql
-3. 사용하는 Sub, Function
+	# code: grant_privileges_to_common_user.sql
+3. 사용하는 Sub, Function code
 	- a.Common.bas
 	- a.ErrHandler.bas
 	- a.WrigeLog.bas
@@ -16,7 +16,9 @@ Log In UserForm
 	- fn_GetLocalIPaddress.bas
 	- fn_InputboxPW.bas
 	- fn_sha512.bas
-4. Form
+4. Form code
 	- f_login.frm
 	- f_login.frx
+5. 완성본(명령단추 추가기능 형태)
+	- login.xlam
 	
