@@ -24,6 +24,7 @@ Private Sub UserForm_Terminate()
             "프로그램을 종료합니다.", vbInformation, banner
         ThisWorkbook.Close savechanges:=False
     End If
+    disconnectALL
 End Sub
 
 '------------------------------------------------------
@@ -145,17 +146,21 @@ Private Sub registerNewPW()
     connectCommonDB
     strSQL = "UPDATE common.users SET user_pw = SHA2(" & SText(user_pw) & ", 512) WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
     affectedCount = executeSQL("registerNewPW", "common.users", strSQL, "f_login", "초기비밀번호설정")
-
-    '//비밀번호 초기화 비활성화
-    strSQL = "UPDATE common.users SET pw_initialize = 0 WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
-    executeSQL "registerNewPW", "common.users", strSQL, "f_login", "비밀번호초기화비활성화"
+    If affectedCount > 0 Then
+         writeLog "registerNewPW", "common.users", strSQL, 0, Me.Name, "사용자PW등록", affectedCount
+    End If
+    disconnectALL
     
     '//비밀번호 등록 확인
     If affectedCount = 0 Then
         MsgBox "비밀번호가 설정되지 않았습니다." & Space(7) & vbNewLine & _
             "관리자에게 문의하여 주시기 바랍니다.", vbInformation, banner
-        'ThisWorkbook.Close savechanges:=False
     Else
+         '//비밀번호 초기화 비활성화
+         connectCommonDB
+        strSQL = "UPDATE common.users SET pw_initialize = 0 WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
+        executeSQL "registerNewPW", "common.users", strSQL, "f_login", "비밀번호초기화비활성화"
+        writeLog "registerNewPW", "common.users", strSQL, 0, Me.Name, "비밀번호초기화비활성화", 1
         MsgBox "비밀번호 설정이 완료되었습니다." & Space(7), vbInformation, banner
     End If
     disconnectALL
@@ -214,9 +219,17 @@ Private Sub cmd_query_Click()
     callDBtoRS "cmd_query_Click", "common.users", strSQL, "f_login", "사용자IP확인"
     
     If IsNull(rs("user_ip").Value) Then '최초 접속이면 IP 기록
-        '[신규IP넣기]
-        strSQL = "UPDATE common.users SET user_ip = " & SText(GetLocalIPaddress) & " WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
-        executeSQL "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자IP기록"
+        If MsgBox("현재의 PC를 사용자의 PC로 등록합니다." & vbNewLine & _
+                         "등록된 PC외 다른 PC에서는 프로그램 사용이 제한됩니다." & vbNewLine & _
+                         "진행하겠습니까?", vbQuestion + vbYesNo, banner) = vbNo Then
+            disconnectALL
+            Exit Sub
+        Else
+            '[신규IP넣기]
+            strSQL = "UPDATE common.users SET user_ip = " & SText(GetLocalIPaddress) & " WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
+            executeSQL "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자IP기록"
+            writeLog "cmd_query_Click", "common.users", strSQL, 0, Me.Name, "사용자IP기록", 1
+        End If
     Else '최초 접속 아닐 경우 IP 체크
         strSQL = "SELECT user_ip FROM common.users WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
         callDBtoRS "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자IP확인"
@@ -260,8 +273,8 @@ Private Function checkPW(ByVal argPW As String) As Boolean
     Dim strPW As Variant
     
     connectCommonDB
-    strSQL = "SELECT user_pw FROM common.v_users WHERE user_id = (SELECT user_id FROM common.v_users WHERE user_nm = " & SText(Application.UserName) & ");"
-    callDBtoRS "checkPW", "common.v_users", strSQL, "f_login"
+    strSQL = "SELECT user_pw FROM common.users WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Application.UserName) & ");"
+    callDBtoRS "checkPW", "common.users", strSQL, "f_login"
     
     strPW = rs("user_pw").Value
     If strPW <> to_SHA512(argPW) Then
