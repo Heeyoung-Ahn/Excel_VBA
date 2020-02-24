@@ -22,6 +22,7 @@ Private Sub UserForm_Terminate()
     If checkLogin = 0 Then
         MsgBox "로그인 정보가 확인되지 않았습니다." & Space(7) & vbNewLine & _
             "프로그램을 종료합니다.", vbInformation, banner
+        reset_menubar
         ThisWorkbook.Close savechanges:=False
     End If
     disconnectALL
