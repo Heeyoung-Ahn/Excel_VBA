@@ -18,7 +18,7 @@ Sub insertDataToDB()
     Dim shtNM As String, tableNM As String, dbNM As String, strSQL As String
     Dim affectedCount As Long
     Dim Values() As String
-    Dim cntField As Integer, cntRecord As Long, i As Integer, j As Long, k As Integer
+    Dim cntField As Integer, cntRecord As Long, i As Long, j As Long, k As Integer
     
     '//Sheet명, Table명, db명 설정
     shtNM = "ch_accounts" '//수정★★
