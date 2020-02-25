@@ -62,12 +62,12 @@ Sub ChurchListtoExcel()
     
     '//결과보고, 마무리
     '로그기록
-    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
-                  "Values('ChurchListtoExcel', " & SText(tableNM) & ", " & SText(strSQL) & ", 0, , '교회리스트엑셀반환', " & rs.RecordCount & ", " & user_id & ";"
+    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, job_nm, affectedCount, user_id) " & _
+                  "Values('ChurchListtoExcel', " & SText(tableNM) & ", " & SText(strSQL) & ", 0, '교회리스트엑셀반환', " & rs.RecordCount & ", " & user_id & ");"
     executeSQL "writeLog", "common.logs", strSQL, , "로그기록"
+    disconnectALL
     '결과보고
     MsgBox "교회리스트 조회가 완료되었습니다.", vbInformation, banner
-    disconnectALL
 End Sub
 
 
