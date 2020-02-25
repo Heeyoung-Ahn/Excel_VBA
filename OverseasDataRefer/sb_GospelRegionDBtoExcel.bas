@@ -64,11 +64,11 @@ Sub GospelRegionDBtoExcel()
     
     '//결과보고, 마무리
     '로그기록-수정★★
-    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
-                  "Values('GospelRegionDBtoExcel', " & SText(tableNM) & ", " & SText(strSQL) & ", 0, , '복음구획자료엑셀반환', " & rs.RecordCount & ", " & user_id & ";"
+    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, job_nm, affectedCount, user_id) " & _
+                  "Values('GospelRegionDBtoExcel', " & SText(tableNM) & ", " & SText(strSQL) & ", 0, '복음구획자료엑셀반환', " & rs.RecordCount & ", " & user_id & ");"
     executeSQL "writeLog", "common.logs", strSQL, , "로그기록"
+    disconnectALL
     '결과보고
     MsgBox "복음구획자료 조회가 완료되었습니다.", vbInformation, banner
-    disconnectALL
 End Sub
 
