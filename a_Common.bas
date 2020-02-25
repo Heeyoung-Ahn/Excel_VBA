@@ -14,6 +14,7 @@ Public connIP As String, connDB As String, connUN As String, connPW As String 'T
 Public user_id As Integer '사용자코드
 Public user_gb As String '사용자구분(SA, AM, MG, WP)
 Public user_nm As String '사용자이름
+Public user_dept As String '사용자부서
 Public checkLogin As Integer '로그인 여부 0: 로그인 안함, 1 = 로그인
 Public today As Date '콤보박스의 날짜 옵션이 비었을 경우 오늘 날짜로 조회
 Public cuCode As Integer, pjCode As Integer 'Project Levle 변수★★
