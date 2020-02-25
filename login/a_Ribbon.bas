@@ -29,15 +29,12 @@ On Error Resume Next
 On Error GoTo 0
 End Sub
 
-'----------
+'---------------------------------------------------------------------
 '  로그인
-'----------
+'    - 추가기능이 2개 이상일 경우 프로시저 명을 다르게 해야 함
+'---------------------------------------------------------------------
 Sub LogIn()
-    If checkLogin = 1 Then
-        MsgBox Application.UserName & "님 이미 로그인 되어 있습니다.", vbInformation, banner
-        Exit Sub
-    End If
-    f_login.Show
+    f_login.Show vbModeless
 End Sub
 
 '------------
