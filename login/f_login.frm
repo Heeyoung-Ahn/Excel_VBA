@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 
 '------------------------------------
@@ -256,7 +257,7 @@ Private Sub cmd_query_Click()
         checkLogin = 1
         setGlobalVariant
         '접속시간 업데이트
-        connectTaskDB
+        connectCommonD
         strSQL = "UPDATE common.users SET timestamp = CURRENT_TIMESTAMP() WHERE user_id = " & user_id & ";"
         executeSQL "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자접속시간업데이트"
         disconnectALL
