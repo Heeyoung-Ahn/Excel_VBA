@@ -255,6 +255,11 @@ Private Sub cmd_query_Click()
         '로그인 값 1, 글로벌 변수 설정
         checkLogin = 1
         setGlobalVariant
+        '접속시간 업데이트
+        connectTaskDB
+        strSQL = "UPDATE common.users SET timestamp = CURRENT_TIMESTAMP() WHERE user_id = " & user_id & ";"
+        executeSQL "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자접속시간업데이트"
+        disconnectALL
         '환영인사
         MsgBox Application.UserName & "님 복많이 받으세요." & Space(7) & vbNewLine & vbNewLine & _
                  "오늘은 " & Format(Date, "YYYY-MM-DD") & "일 입니다." & vbNewLine & _
