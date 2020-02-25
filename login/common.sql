@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_pw` varchar(128) DEFAULT NULL COMMENT '비밀번호',
   `pw_initialize` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT '1: 최초접속(비밀번호 초기화)',
   `user_ip` varchar(20) DEFAULT NULL,
+  `user_dept` varchar(20) NOT NULL,
   `programv` varchar(20) NOT NULL DEFAULT 'programv' COMMENT '프로그램버전',
   `argIP` varchar(20) NOT NULL DEFAULT 'DBIP' COMMENT '작업용DB IP',
   `argDB` varchar(30) NOT NULL DEFAULT 'common' COMMENT '작업용DB 스키마',
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `user_nm` (`user_nm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='프로그램 사용자';
 
--- Dumping data for table common.users: ~1 rows (approximately)
+-- Dumping data for table common.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
