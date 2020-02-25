@@ -37,7 +37,7 @@ Sub LogIn()
         MsgBox Application.UserName & "님 이미 로그인 되어 있습니다.", vbInformation, banner
         Exit Sub
     End If
-    f_login.Show vbModeless
+    f_login.Show
 End Sub
 
 '------------
