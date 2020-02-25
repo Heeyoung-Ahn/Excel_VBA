@@ -24,6 +24,7 @@ Sub setGlobalVariant(Optional ProcedureNM As String)
     user_id = rs("user_id").Value
     user_nm = rs("user_nm").Value
     user_gb = rs("user_gb").Value
+    user_dept = rs("user_dept").Value
     
     disconnectALL
     If ProcedureNM <> Empty Then Application.Run ProcedureNM
