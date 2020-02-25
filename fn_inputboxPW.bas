@@ -1,7 +1,6 @@
 Attribute VB_Name = "fn_inputboxPW"
 ' Module level variable for holding the hook
   Private InputBoxHook As Long
-
 ' API Functions
   #If VBA7 And Win64 Then
       Private Declare PtrSafe Function GetCurrentThreadId Lib "kernel32" () As Long
@@ -20,13 +19,11 @@ Attribute VB_Name = "fn_inputboxPW"
       Private Declare Function SetWindowsHookEx Lib "user32" Alias "SetWindowsHookExA" (ByVal idHook As Long, ByVal lpfn As Long, ByVal hmod As Long, ByVal dwThreadId As Long) As Long
       Private Declare Function SendDlgItemMessage Lib "user32" Alias "SendDlgItemMessageA" (ByVal hDlg As Long, ByVal nIDDlgItem As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
   #End If
-
 Option Explicit
 
 Function InputBoxPW(ByVal IB_Prompt As String, _
            Optional ByVal IB_Title As String = "Microsoft Excel", _
            Optional ByVal IB_Default As String = vbNullString) As String
-
 ' This function will request an input from the user using a hooked InputBox.
 ' The hooked InputBox is hooked to show all chars as asterisk (*),
 ' thus the hooked InputBox is very suitable for requesting confidential information, like passwords.
@@ -52,11 +49,9 @@ Function InputBoxPW(ByVal IB_Prompt As String, _
 
 EF: ' End of Function
       UnhookWindowsHookEx InputBoxHook                                                          ' Release the hook
-
 End Function
 
 Private Function InputBoxPW_Hook(ByVal nCode As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-
 ' This private function is the hook sub-function of the above 'InputBoxPW()' function.
 ' The hook is simply set to this function.
 '
@@ -82,11 +77,9 @@ Private Function InputBoxPW_Hook(ByVal nCode As Long, ByVal wParam As Long, ByVa
 
 ' * ' Make sure that any other hooks that may be in place are called correctly
       CallNextHookEx InputBoxHook, nCode, wParam, lParam
-
 End Function
 
 Sub InputBoxPW_Test()
-
 ' * ' Initialize
       On Error Resume Next
 
@@ -102,7 +95,6 @@ Sub InputBoxPW_Test()
       Else
             MsgBox mypassword, vbOKOnly + vbInformation
       End If
-
 End Sub
 
 
