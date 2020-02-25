@@ -38,6 +38,13 @@ Private Sub UserForm_Initialize()
 On Error GoTo ErrHandler
     Dim strSQL As String
     
+    '//로그인체크
+    If checkLogin = 1 Then
+        MsgBox Application.UserName & "님 이미 로그인 되어 있습니다.", vbInformation, banner
+        cmd_close_Click
+        GoTo ErrHandler:
+    End If
+    
     '//기초설정
     Me.cmd_close.Width = 0
     Me.cmd_close.Cancel = True
@@ -219,7 +226,7 @@ Private Sub cmd_query_Click()
     strSQL = "SELECT user_ip FROM common.users WHERE user_id = (SELECT user_id FROM common.users WHERE user_nm = " & SText(Me.txt_ID.Value) & ");"
     callDBtoRS "cmd_query_Click", "common.users", strSQL, "f_login", "사용자IP확인"
     
-    If IsNull(rs("user_ip").Value) Then '최초 접속이면 IP 기록
+    If IsNull(rs("user_ip").Value) = True Or Len(rs("user_ip")) = 0 Then '최초 접속이면 IP 기록
         If MsgBox("현재의 PC를 사용자의 PC로 등록합니다." & vbNewLine & _
                          "등록된 PC외 다른 PC에서는 프로그램 사용이 제한됩니다." & vbNewLine & _
                          "진행하겠습니까?", vbQuestion + vbYesNo, banner) = vbNo Then
