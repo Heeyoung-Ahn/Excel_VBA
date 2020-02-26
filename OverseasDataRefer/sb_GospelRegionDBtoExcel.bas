@@ -19,14 +19,14 @@ Sub GospelRegionDBtoExcel()
     End If
     
     '//db명 설정
-    tableNM = "overseas.gospel_regions" '//db명.테이블명 - 수정★★
+    tableNM = "overseas.v_gospel_regions" '//db명.테이블명 - 수정★★
     dbNM = "overseas" '//수정★★
     
     '//DB연결
     connectTaskDB
     
     '//Select문-수정★★
-    strSQL = "SELECT * FROM " & tableNM & " a WHERE a.dept_in_charge = " & SText(user_dept) & ";"
+    strSQL = "SELECT * FROM " & tableNM & " WHERE `담당부서` = " & SText(user_dept) & ";"
     
     '//SQL문 실행하고 조회된 자료를 레코드셋에 담음
     callDBtoRS "gospelDBtoExcel", tableNM, strSQL, , "복음구획엑셀반환"
