@@ -4,9 +4,10 @@ Option Explicit
 '//구조체 정의
 Type t_users '//common.users
     user_id As Integer
-    user_gb As String
     user_nm As String
+    user_gb As String
     user_pw As String
+    user_dept As String
     argIP As String
     argDB As String
     argUN As String
