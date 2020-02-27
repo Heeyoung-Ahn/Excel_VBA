@@ -11,8 +11,9 @@ Public Function checkTextBox(ByRef argTxtbox As MSForms.TextBox, ByVal title As 
                                                 Optional ByVal dataType As String = "STRING", _
                                                 Optional ByVal Length As Integer = 1000, _
                                                 Optional ByVal isSetFocus As Boolean = True) As Boolean
-Dim checkResult As Boolean
+    Dim checkResult As Boolean
     checkResult = True
+    
    '필수입력 검증
     If isEssencial = True And (IsNull(argTxtbox.text) Or argTxtbox.text = "") Then
         MsgBox title & "을(를) 입력하세요." & Space(7), vbInformation, banner
@@ -22,7 +23,8 @@ Dim checkResult As Boolean
         argTxtbox = Empty
         checkResult = False
     End If
-    '데이터형 검증
+    
+    '데이터형 검증: 숫자, 날짜
     If (dataType = "NUMERIC") Then
         If Not IsNumeric(argTxtbox.text) Then
             MsgBox title & "에는 숫자만 입력할 수 있습니다." & Space(7), vbInformation, banner
@@ -45,6 +47,7 @@ Dim checkResult As Boolean
             End If
         End If
     End If
+    
      '입력길이 검증
      If (Not IsNull(argTxtbox.text)) And Len(argTxtbox.text) > Length Then
         MsgBox title & "의 입력 최대 길이는 " & CStr(Length) & "를 넘을 수 없습니다." & Space(7), vbInformation, banner
@@ -54,6 +57,7 @@ Dim checkResult As Boolean
         argTxtbox = Empty
         checkResult = False
     End If
+    
     '함수결과의 True, False로 반환
     checkTextBox = checkResult
 End Function
