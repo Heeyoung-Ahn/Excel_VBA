@@ -1,15 +1,15 @@
 Attribute VB_Name = "sb_setCBox"
 Option Explicit
 
-'--------------------------------------------------------------
+'-----------------------------------------------------------------------------------
 '  콤보박스 설정: 전체목록
-'    - setCBox(콤보박스이름, 콤보박스내용 약어, 폼이름)
-'--------------------------------------------------------------
+'    - setCBox(콤보박스이름, 콤보박스내용 약어, 폼이름, 조회일, 조회권한)
+'-----------------------------------------------------------------------------------
 Sub setCBox(ByRef argCBox As MSForms.ComboBox, kindCBox As String, formNM As String, Optional referDate As Date, Optional user_authority As Integer = 1)
     Dim strSQL As String
     If referDate = Empty Then referDate = today
-    Select Case kindCBox
     
+    Select Case kindCBox
         Case "FX" '//화폐 콤보
             With argCBox
                 .ColumnCount = 3
@@ -21,8 +21,7 @@ Sub setCBox(ByRef argCBox As MSForms.ComboBox, kindCBox As String, formNM As Str
                 .IMEMode = fmIMEModeAlpha
                 .Style = fmStyleDropDownCombo
             End With
-            strSQL = "SELECT currency_id, currency_un, currency_nm FROM co_account.v_currencies ORDER BY sort_order;"
-            loadDataToCBox argCBox, strSQL, "co_account.v_currencies", formNM
-            
+            strSQL = "SELECT currency_id, currency_un, currency_nm FROM fx_calculator.currencies ORDER BY sort_order;"
+            loadDataToCBox argCBox, strSQL, "fx_calculator.currencies", formNM
     End Select
 End Sub
