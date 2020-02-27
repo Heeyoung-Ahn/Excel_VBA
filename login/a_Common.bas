@@ -1,13 +1,13 @@
 Attribute VB_Name = "a_Common"
 Option Explicit
 
-Public Const banner As String = "프로그램 명칭" '★★
+Public Const banner As String = "Program_NM" '★★
 Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC에 설치된 ODBC Driver★★
-Public Const programv As String = "Program Version" '프로그램 버전 관리★★
-Public Const IPAddress As String = "IP주소" 'DB IP Address★★
+Public Const programv As String = "ProgramV" '프로그램 버전 관리★★
+Public Const IPAddress As String = "172.0.0.0" 'DB IP Address★★
 Public Const commonDB As String = "common" 'Common DB명★★
 Public Const commpnID As String = "common" 'Common DB UN★★
-Public Const commonPW As String = "Password" 'Common DB 비밀번호★★
+Public Const commonPW As String = "password" 'Common DB 비밀번호★★
 Public conn As ADODB.Connection 'ADO Connection 개체 변수
 Public rs As New ADODB.Recordset 'ADO Recordset 개체 변수
 Public connIP As String, connDB As String, connUN As String, connPW As String 'Task DB 연결 정보
@@ -16,7 +16,7 @@ Public user_gb As String '사용자구분(SA, AM, MG, WP)
 Public user_nm As String '사용자이름
 Public user_dept As String '사용자부서
 Public checkLogin As Integer '로그인 여부 0: 로그인 안함, 1 = 로그인
-Public today As Date '콤보박스의 날짜 옵션이 비었을 경우 오늘 날짜로 조회
+Public today As Date '//콤보박스의 날짜 옵션이 비었을 경우 오늘 날짜로 조회
 Public cuCode As Integer, pjCode As Integer 'Project Levle 변수★★
 
 '-------------------------------
