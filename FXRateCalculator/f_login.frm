@@ -22,7 +22,6 @@ Private Sub UserForm_Terminate()
     If checkLogin = 0 Then
         MsgBox "로그인 정보가 확인되지 않았습니다." & Space(7) & vbNewLine & _
             "프로그램을 종료합니다.", vbInformation, banner
-        reset_menubar
         ThisWorkbook.Close savechanges:=False
     End If
     disconnectALL
@@ -256,8 +255,8 @@ Private Sub cmd_query_Click()
         checkLogin = 1
         setGlobalVariant
         '접속시간 업데이트
-        connectTaskDB
-        strSQL = "UPDATE common.users SET timestamp = CURRENT_TIMESTAMP() WHERE user_id = " & user_id & ";"
+        connectCommonDB
+        strSQL = "UPDATE common.users SET time_stamp = CURRENT_TIMESTAMP() WHERE user_id = " & user_id & ";"
         executeSQL "cmd_query_Click", "common.users", strSQL, Me.Name, "사용자접속시간업데이트"
         disconnectALL
         '환영인사
