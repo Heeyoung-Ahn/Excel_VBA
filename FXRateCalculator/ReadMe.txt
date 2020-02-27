@@ -45,10 +45,11 @@ FX Rate Calculator with Log In
 	- fn_GetLocalIPaddress: 사용자 PC IP주소 조회
 	- fn_InputboxPW: InputBox 입력 시 보안처리
 	- fn_sha512: DB에서 SHA-512방식으로 단방향 암호화 된 내용과 VBA에서 입력된 내용을 비교하기 위한 VBA 코드
-	- s_loadDataToCBox: 콤보박스 리스팅
-	- s_returnListPosition: 리스트박스의 원래 위치로 커서 반환
-	- s_setCBox: 콤보박스 설정
-	- s_setGlobalVariant.bas: 로그인 시 전역변수 설정	
+	- sb_insertPicture: 사진 엑셀 워크시트에 추가
+	- sb_loadDataToCBox: 콤보박스 리스팅
+	- sb_returnListPosition: 리스트박스의 원래 위치로 커서 반환
+	- sb_setCBox: 콤보박스 설정
+	- sb_setGlobalVariant.bas: 로그인 시 전역변수 설정	
 7. Form code
 	- f_login.frm: UserForm 파일
 	- f_login.frx: UserForm의 디자인 파일
