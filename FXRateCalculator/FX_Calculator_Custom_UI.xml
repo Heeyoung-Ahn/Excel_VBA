@@ -1,0 +1,30 @@
+<!-- Excel 2010 이상 버전에서 사용시 office/2009/07 로 사용하고, 2007에서는 office/2006/01로 사용 / -->
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+	<ribbon>
+		<tabs>
+			<!-- 리본 탭의 [보기] 뒤에 탭 추가 / -->
+			<tab id="Tab1" label="환율조회" insertAfterMso="TabView">		
+			
+				<group id="Group1" label="실행메뉴">
+					<button id="FX_Calculator" label="환율조회기" size="large" onAction="run_RibbonControl" imageMso="DollarSign" screentip="환율조회기" />
+					<splitButton id ="splbtnImage" size="large">
+					<button id ="btnImage" imageMso="VideoColorMenu" label="이미지삽입"/>
+						<menu id="menuImage" itemSize="normal">
+							<button id="InsertPicture" label="그림삽입(비율고정)" onAction="run_RibbonControl" imageMso="CaptionInsert" screentip="종횡비율을 유지하며 선택범위에 그림삽입" />
+							<button id="InsertPicture2" label="그림삽입(자율비율)" onAction="run_RibbonControl" imageMso="Bevel" screentip="종횡비율을 무시하고 선택범위에 맞게 그림삽입" />
+						</menu>
+					</splitButton>	
+				</group>
+
+				<group id="Group2" label="로그인">
+					<button id="LogIn" label="로그인" size="large" onAction="run_RibbonControl" imageMso="OrgChartPictureInsert" supertip="로그인" />				
+					<button id="LogOut" label="로그아웃" size="large" onAction="run_RibbonControl" imageMso="CloseAllItems" supertip="로그아웃" />
+					
+					<separator id="vertseparator1" />
+					
+					<button id="AddinUninstall" label="프로그램 종료" size="large" onAction="run_RibbonControl" imageMso="GroupOutliningClose" supertip="프로그램 종료" />				
+				</group>
+			</tab>
+		</tabs>
+	</ribbon>
+</customUI>
