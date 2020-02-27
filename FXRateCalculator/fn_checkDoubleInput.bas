@@ -1,10 +1,11 @@
 Attribute VB_Name = "fn_checkDoubleInput"
 Option Explicit
 
-'-------------------------------------------------------------------
+'--------------------------------------------------------------------------------------------------
 '  특정 필드 중복 검토
-'    - checkDoubleInput(필드명, 데이터텍스트) True: 중복
-'-------------------------------------------------------------------
+'    - checkDoubleInput(필드명, 데이터, DB테이블명, 유저폼명, 이전데이터) True: 중복
+'    - 수정의 경우 이전 데이터를 넣어서 중복체크 우회
+'--------------------------------------------------------------------------------------------------
 Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As String, formNM As String, Optional ByVal beforeData As Variant = Empty) As Boolean
     Dim strSQL As String
     Dim cntRecord As Integer
@@ -20,7 +21,6 @@ Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As 
     Else
         cntRecord = rs("record_cnt").Value
     End If
-    'Debug.Print strSQL
     Call disconnectALL
     
     '//중복 입력 검증
@@ -32,11 +32,10 @@ Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As 
     End If
 End Function
 
-
-'----------------------------------------------------------------------------------
+'----------------------------------------------------------------------------------------------------------------------------
 '  관계 데이터 중복 검토
-'    - checkDoubleInput(필드명1, 필드명2, 데이터1, 데이터2) True: 중복
-'----------------------------------------------------------------------------------
+'    - checkDoubleInput(데이터유형, 필드명1, 필드명2, 데이터1, 데이터2, DB테이블명, 유저폼이름) True: 중복
+'----------------------------------------------------------------------------------------------------------------------------
 Public Function checkDoubleInput2(dataType As Integer, fieldNM1 As String, fieldNM2 As String, Data1 As Variant, Data2 As Variant, _
                                                       tableNM As String, formNM As String) As Boolean
     Dim strSQL As String
@@ -54,7 +53,6 @@ Public Function checkDoubleInput2(dataType As Integer, fieldNM1 As String, field
     Else
         cntRecord = rs("record_cnt").Value
     End If
-    'Debug.Print strSQL
     Call disconnectALL
     
     '//중복 입력 검증
@@ -76,14 +74,13 @@ Public Function checkDoubleInput2(dataType As Integer, fieldNM1 As String, field
     End Select
 End Function
 
-'--------------------------------------------------------------------------------------------------------------------
+'------------------------------------------------------------------------------------------------------------------------------------------------
 '  기간 관계 데이터 중복 검토
-'    - checkDoubleInput3( 데이터유형, 필드명1, 필드명2, 데이터1, 데이터2, 시작일, 종료일) True: 중복
-'--------------------------------------------------------------------------------------------------------------------
+'    - checkDoubleInput3( 데이터유형, 필드명1, 필드명2, 데이터1, 데이터2, 시작일, 종료일, DB테이블명, 유저폼이름) True: 중복
+'------------------------------------------------------------------------------------------------------------------------------------------------
 Public Function checkDoubleInput3(dataType As Integer, fieldNM1 As String, fieldNM2 As String, Data1 As Variant, Data2 As Variant, _
                                                       start_dt As Date, end_dt As Date, _
                                                       tableNM As String, formNM As String) As Boolean
-
     Dim strSQL As String
     Dim cntRecord As Integer
     
@@ -95,7 +92,6 @@ Public Function checkDoubleInput3(dataType As Integer, fieldNM1 As String, field
                   fieldNM2 & " = " & SText(Data2) & " AND " & _
                   "start_dt <= " & SText(end_dt) & " AND " & _
                   "end_dt >= " & SText(start_dt) & ";"
-    'Debug.Print strSQL
     callDBtoRS "checkDoubleInput3", tableNM, strSQL, formNM
     If rs.EOF = True Then
         cntRecord = 0
@@ -124,14 +120,13 @@ Public Function checkDoubleInput3(dataType As Integer, fieldNM1 As String, field
     End Select
 End Function
 
-'--------------------------------------------------------------------------------------------------------------------
-'  기간  데이터 중복 검토
-'    - checkDoubleInput4( 데이터유형, 필드명, 데이터, 시작일, 종료일) True: 중복
-'--------------------------------------------------------------------------------------------------------------------
+'-------------------------------------------------------------------------------------------------------------------------
+'  기간 데이터 중복 검토
+'    - checkDoubleInput4( 데이터유형, 필드명, 데이터, 시작일, 종료일, DB테이블명, 유저폼이름) True: 중복
+'-------------------------------------------------------------------------------------------------------------------------
 Public Function checkDoubleInput4(dataType As Integer, fieldNM As String, Data As Variant, _
                                                       start_dt As Date, end_dt As Date, _
                                                       tableNM As String, formNM As String) As Boolean
-
     Dim strSQL As String
     Dim cntRecord As Integer
     
@@ -142,7 +137,6 @@ Public Function checkDoubleInput4(dataType As Integer, fieldNM As String, Data A
                   "WHERE " & fieldNM & " = " & SText(Data) & " AND " & _
                   "start_dt <= " & SText(end_dt) & " AND " & _
                   "end_dt >= " & SText(start_dt) & ";"
-    'Debug.Print strSQL
     callDBtoRS "checkDoubleInput4", tableNM, strSQL, formNM
     If rs.EOF = True Then
         cntRecord = 0
