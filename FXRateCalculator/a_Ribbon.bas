@@ -1,52 +1,37 @@
 Attribute VB_Name = "a_Ribbon"
 Option Explicit
 
-'--------------------
-'  추가기능 메뉴바
-'--------------------
-Sub make_menubar()
-Call reset_menubar
-On Error Resume Next
-
-    With Application.CommandBars("tools").Controls
-        With .Add(Type:=msoControlButton)
-            .FaceId = 1907
-            .Caption = "로그인"
-            .OnAction = "LogIn"
-        End With
-        With .Add(Type:=msoControlButton)
-            .FaceId = 384
-            .Caption = "환율조회"
-            .OnAction = "FX_Calculator"
-        End With
-        With .Add(Type:=msoControlButton)
-            .FaceId = 5955
-            .Caption = "로그아웃"
-            .OnAction = "LogOut"
-        End With
-        With .Add(Type:=msoControlButton)
-            .FaceId = 1088
-            .Caption = "프로그램종료"
-            .OnAction = "AddinUninstall"
-        End With
-    End With
-
-On Error GoTo 0
+'-----------------------------------------------------
+'  리본 메뉴의 Button ID에 대한 처리 프로시저
+'-----------------------------------------------------
+Sub run_RibbonControl(Button As Office.IRibbonControl)
+    Select Case Button.ID
+        '//프로그램
+        Case "FX_Calculator":     Call FX_Calculator
+        Case "InsertPicture":    Call InsertPicture
+        Case "InsertPicture2":    Call InsertPicture2
+                      
+        '//공통
+        Case "LogIn":     Call LogIn
+        Case "LogOut":     Call LogOut
+        Case "AddinUninstall":     Call AddinUninstall
+        
+        Case Else:     Call RibbonButton_Error(Button.ID)
+    End Select
 End Sub
 
-'---------------------------------------------------------------------
+'-------------------------------------------------------------------
+'  Button ID에 대한 처리 프로시저가 없는 경우 오류 메시지
+'-------------------------------------------------------------------
+Sub RibbonButton_Error(sbID As String)
+   MsgBox "선택하신 메뉴(" & sbID & ")는 아직 준비가 되어 있지 않습니다.", vbCritical, banner
+End Sub
+
+'-----------
 '  로그인
-'    - 추가기능이 2개 이상일 경우 프로시저 명을 다르게 해야 함
-'---------------------------------------------------------------------
+'-----------
 Sub LogIn()
     f_login.Show
-End Sub
-
-'---------------
-'  환율조회기
-'---------------
-Sub FX_Calculator()
-    f_currency_cal.Show vbModeless
 End Sub
 
 '------------
@@ -65,23 +50,21 @@ Sub LogOut()
     connPW = Empty
     user_id = Empty
     user_gb = Empty
+    user_dept = Empty
     MsgBox "로그아웃 되었습니다." & Space(7), vbInformation, banner
 End Sub
 
-'--------------------------
-'  추가기능 메뉴바 제거
-'--------------------------
-Sub reset_menubar()
-On Error Resume Next
-    Application.CommandBars("WorkSheet Menu Bar").Reset
-On Error GoTo 0
+'------------------------------------
+'  현재 파일을 닫아 리본 탭 닫음
+'------------------------------------
+Sub AddinUninstall()
+   ThisWorkbook.Close False
 End Sub
 
-'------------------
-'  추가기능 종료
-'------------------
-Sub AddinUninstall()
-    reset_menubar
-    ThisWorkbook.Close False
+'---------------
+'  환율조회기
+'---------------
+Sub FX_Calculator()
+    f_currency_cal.Show vbModeless
 End Sub
 
