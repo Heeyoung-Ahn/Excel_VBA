@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Dim cntlst1Col As Integer '//리스트 컬럼 수
 Dim TB1 As String '//폼에 연결된 DB 테이블
-Const strOrderBy As String = "currency_un ASC" '//DB에서 sort_order 필드 없는 경우 수정★★
+Const strOrderBy As String = "currency_un ASC" '//DB에서 sort_order 필드
 Dim caseSave As Integer '//1: 추가, 2: 수정, 3: 삭제(SUSPEND), 4: 완전삭제
 Dim queryKey As Integer '//리스트 위치 반환에 사용될 id
 
@@ -35,12 +35,12 @@ Private Sub UserForm_Initialize()
     If checkLogin = 0 Then f_login.Show '//로그인체크
     
     '//기초설정
-    cntlst1Col = 5 '//리스트의 필드수★★ 화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율, 정렬순서
+    cntlst1Col = 5 '//화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율, 정렬순서
 '    Me.cmd_close.Width = 0
     Me.cmd_close.Cancel = True
     
     '//폼에 연결된 object 정보
-    TB1 = "overseas.currency_cal"
+    TB1 = "fx_calculator.currency_cal"
     
     With txtC3
         .Locked = True
@@ -54,6 +54,7 @@ Private Sub UserForm_Initialize()
         .ColumnWidths = "0,48,70,70,70" '화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율
         .Width = 260
         .TextAlign = fmTextAlignLeft
+        .Font = "맑은 고딕"
     End With
     Call loadDataToList(Me.lst1) '//lst1 자료 구성
     
@@ -186,7 +187,7 @@ End Sub
 '-----------------------------------------
 Private Function makeSelectSQL(Optional ByVal argSTxt As String, Optional ByVal argFTxt As String) As String
     Dim strSQL As String
-    '//DB에서 반환할 리스트 필드 수정★★: 화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율
+    '//화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율
     strSQL = "SELECT a.currency_id, a.currency_un, a.refer_dt, a.fx_rate_krw, a.fx_rate_usd " & _
                   "FROM " & TB1 & " a WHERE a.user_id = " & user_id & ";"
     makeSelectSQL = strSQL
@@ -206,7 +207,7 @@ End Sub
 '  데이터 삭제
 '-----------------------------------------
 Private Sub cmd_delete_Click()
-    If Me.lst1.ListIndex = -1 Then Exit Sub '//리스트명 수정★★
+    If Me.lst1.ListIndex = -1 Then Exit Sub
     If MsgBox("화폐를 삭제하겠습니까?" & Space(7), vbQuestion + vbYesNo, banner) = vbNo Then
         Exit Sub
     End If
@@ -219,7 +220,7 @@ End Sub
 '  데이터 저장:추가/수정/삭제
 '-----------------------------------------
 Private Sub data_save()
-    Dim argData As t_currency_cal '//구조체수정★★
+    Dim argData As t_currency_cal
     Dim strSQL As String
     Dim result As t_result
     Dim dataType As Integer
@@ -230,7 +231,7 @@ Private Sub data_save()
         Exit Sub
     End If
     
-    '//중복입력 체크: 입력자가 다를 경우 결재승인번호 중복 허용
+    '//중복입력 체크
     If Me.lst1.ListIndex = -1 Then
         dataType = caseSave
     ElseIf Me.lst1.Column(0, Me.lst1.ListIndex) <> cbo_FX.Column(0, cbo_FX.ListIndex) And caseSave = 2 Then '선택한 리스트와 수정하려는 항목이 다를 경우 신규데이터로 검증
@@ -243,7 +244,7 @@ Private Sub data_save()
         Exit Sub
     End If
     
-    '//데이터 구조체로 반환(테입구조에 맞게): 데이터 형태에 맞게 수정★★
+    '//데이터 구조체로 반환(테입구조에 맞게)
     With argData
         .currency_id = cbo_FX.Column(0, cbo_FX.ListIndex)
         .currency_un = cbo_FX.Column(1, cbo_FX.ListIndex)
@@ -253,7 +254,7 @@ Private Sub data_save()
         .user_id = user_id
     End With
     
-    '//리스트 위치 반환에 사용될 id: 리스트명 수정★★
+    '//리스트 위치 반환에 사용될 id
     If Me.lst1.ListIndex = -1 Then
         queryKey = 0
     Else
@@ -277,7 +278,7 @@ Private Sub data_save()
     End Select
     
     '//리스트에 반영
-    loadDataToList Me.lst1, queryKey '//리스트명 수정★★
+    loadDataToList Me.lst1, queryKey
 End Sub
 
 '-----------------------------------------
@@ -288,7 +289,6 @@ Private Function InsertData(ByRef argData As t_currency_cal) As t_result
     Dim resultCode As Integer
     
     connectTaskDB
-    '//DB에 추가되어야 하는 필드명과 구조체 변수 수정★★
     strSQL = "INSERT INTO " & TB1 & "(currency_id, currency_un, refer_dt, fx_rate_krw, fx_rate_usd, user_id) VALUES(" & _
                   argData.currency_id & ", " & _
                   SText(argData.currency_un) & ", " & _
@@ -332,7 +332,7 @@ End Function
 '-----------------------------------------
 Private Sub cmd_new_Click() '새로작성
     Call control_initialize1
-    lst1.ListIndex = -1 '//수정★★
+    lst1.ListIndex = -1
 End Sub
 Private Sub cmd_Cnew_Click()
     control_initialize2
@@ -376,7 +376,7 @@ Private Sub cmd_update_Click()
         k = k + executeSQL("cmd_update_Click", TB1, strSQL, Me.Name, "환율 업데이트")
     Next i
     Call disconnectALL
-    loadDataToList Me.lst1 '//리스명★★
+    loadDataToList Me.lst1
     
     MsgBox "다음과 같이 환율이 업데이트 되었습니다." & Space(7) & vbNewLine & vbNewLine & _
                   "리스트 화폐 수 : " & Me.lst1.ListCount & "개" & vbNewLine & _
