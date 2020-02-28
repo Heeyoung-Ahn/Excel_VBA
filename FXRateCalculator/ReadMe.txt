@@ -58,5 +58,5 @@ FX Rate Calculator with Log In
 8. 완성본(명령단추 추가기능 형태)
 	- FX_Calculator V1.0.xlam
 9. VBA Library 추가
-	- ADO Model: Microsoft ActiveX Data Objects 6.1 Library
+	- Microsoft ActiveX Data Objects 6.1 Library
 	- Microsoft WinHTTP Services, version 5.1	
