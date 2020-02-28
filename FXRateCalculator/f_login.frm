@@ -36,14 +36,7 @@ End Sub
 Private Sub UserForm_Initialize()
 On Error GoTo ErrHandler
     Dim strSQL As String
-    
-    '//로그인체크
-    If checkLogin = 1 Then
-        MsgBox Application.UserName & "님 이미 로그인 되어 있습니다.", vbInformation, banner
-        cmd_close_Click
-        GoTo ErrHandler:
-    End If
-    
+       
     '//기초설정
     Me.cmd_close.Width = 0
     Me.cmd_close.Cancel = True
