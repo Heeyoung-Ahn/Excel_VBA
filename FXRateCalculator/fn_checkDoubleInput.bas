@@ -6,7 +6,8 @@ Option Explicit
 '    - checkDoubleInput(필드명, 데이터, DB테이블명, 유저폼명, 이전데이터) True: 중복
 '    - 수정의 경우 이전 데이터를 넣어서 중복체크 우회
 '--------------------------------------------------------------------------------------------------
-Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As String, formNM As String, Optional ByVal beforeData As Variant = Empty) As Boolean
+Public Function checkDoubleInput(fieldNM As String, data As Variant, _
+                                                    tableNM As String, formNM As String, Optional ByVal beforeData As Variant = Empty) As Boolean
     Dim strSQL As String
     Dim cntRecord As Integer
     
@@ -14,7 +15,7 @@ Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As 
     Call connectTaskDB
     strSQL = "SELECT COUNT(" & fieldNM & ") record_cnt " & _
                   "FROM " & tableNM & " " & _
-                  "WHERE " & fieldNM & " = " & SText(Data) & ";"
+                  "WHERE " & fieldNM & " = " & SText(data) & ";"
     callDBtoRS "checkDoubleInput", tableNM, strSQL, formNM
     If rs.EOF = True Then
         cntRecord = 0
@@ -24,7 +25,7 @@ Public Function checkDoubleInput(fieldNM As String, Data As Variant, tableNM As 
     Call disconnectALL
     
     '//중복 입력 검증
-    If beforeData <> Empty And beforeData = Data Then Exit Function '//수정의 경우 기존 데이터와 동일해서 통과
+    If beforeData <> Empty And beforeData = data Then Exit Function '//수정의 경우 기존 데이터와 동일해서 통과
     If cntRecord >= 1 Then
         checkDoubleInput = True
     Else
@@ -124,7 +125,7 @@ End Function
 '  기간 데이터 중복 검토
 '    - checkDoubleInput4( 데이터유형, 필드명, 데이터, 시작일, 종료일, DB테이블명, 유저폼이름) True: 중복
 '-------------------------------------------------------------------------------------------------------------------------
-Public Function checkDoubleInput4(dataType As Integer, fieldNM As String, Data As Variant, _
+Public Function checkDoubleInput4(dataType As Integer, fieldNM As String, data As Variant, _
                                                       start_dt As Date, end_dt As Date, _
                                                       tableNM As String, formNM As String) As Boolean
     Dim strSQL As String
@@ -134,7 +135,7 @@ Public Function checkDoubleInput4(dataType As Integer, fieldNM As String, Data A
     Call connectTaskDB
     strSQL = "SELECT COUNT(*) record_cnt " & _
                   "FROM " & tableNM & " " & _
-                  "WHERE " & fieldNM & " = " & SText(Data) & " AND " & _
+                  "WHERE " & fieldNM & " = " & SText(data) & " AND " & _
                   "start_dt <= " & SText(end_dt) & " AND " & _
                   "end_dt >= " & SText(start_dt) & ";"
     callDBtoRS "checkDoubleInput4", tableNM, strSQL, formNM
