@@ -55,7 +55,7 @@ FX Rate Calculator with Log In
 	- f_login.frx: UserForm의 디자인 파일
 	- f_currency_cal.frm
 	- f_currency_cal.frx
-8. 완성본(명령단추 추가기능 형태)
+8. 완성본(엑셀 추가기능 형태)
 	- FX_Calculator V1.0.xlam
 9. VBA Library 추가
 	- Microsoft ActiveX Data Objects 6.1 Library
