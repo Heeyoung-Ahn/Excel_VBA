@@ -2,6 +2,7 @@ FX Rate Calculator with Log In
 
 1. 프로그램의 내용
 	- 리본메뉴에 추가기능으로 메뉴 부착
+	  # 추가기능 매뉴얼: https://github.com/Heeyoung-Ahn/Excel_VBA/wiki/%EC%B6%94%EA%B0%80%EA%B8%B0%EB%8A%A5(%EB%A6%AC%EB%B3%B8%EB%A9%94%EB%89%B4-%EB%B0%A9%EC%8B%9D)
 	- 엑셀 유저폼을 이용하여 DB 로그인
 	- 사용자별 환율 조회 환경 구성
 	- 하나은행 사이트 환율 조회: 실시간, 특정조건
