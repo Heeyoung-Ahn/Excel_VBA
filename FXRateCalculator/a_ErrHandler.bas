@@ -4,7 +4,7 @@ Option Explicit
 '-----------------------------------------------------------------------------------------------------
 '  에러처리: errhandle(프로시저명, 테이블명, SQL문, 폼이름, 작업명)
 '    - 에러 발생 내용을 디버깅 하기 위해 메시지 박스로 표시
-'    - 에러 발생에 따른 로그 기록은 DB와 관계된 내용만 callDBroRS, executeSQL에서 진행
+'    - 에러 발생에 따른 로그 기록은 DB와 관계된 내용만 callDBtoRS, executeSQL에서 진행
 '-----------------------------------------------------------------------------------------------------
 Sub ErrHandle(ProcedureNM As String, Optional tableNM As String = "NULL", Optional SQLScript As String = "NULL", Optional formNM As String = "NULL", Optional JobNM As String = "기타")
     If Err.Number <> 0 Then
