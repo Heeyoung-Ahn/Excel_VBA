@@ -110,7 +110,7 @@ Public Function PText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
         PText = "'%%'"
     Else
-        PText = "'%" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "%'"
+        PText = "'%" & Trim(Replace(Replace(Replace(argString, "%", "\%"), "'", "''"), Chr(10), "\r\n")) & "%'"
     End If
 End Function
 
@@ -121,7 +121,7 @@ Public Function SText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
         SText = "''"
     Else
-        SText = "'" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "'"
+        SText = "'" & Trim(Replace(Replace(Replace(argString, "%", "\%"), "'", "''"), Chr(10), "\r\n")) & "'"
     End If
 End Function
 
