@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 
 '------------------------------------
@@ -177,7 +178,6 @@ End Sub
 Private Sub cmd_query_Click()
     Dim strSQL As String
     Dim affectedCount As Long
-    Dim ipRng As Integer
     
     '//사용자 이름 등록 여부 체크
     If txt_ID = Empty Then
