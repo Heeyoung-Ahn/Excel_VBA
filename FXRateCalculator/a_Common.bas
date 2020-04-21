@@ -6,7 +6,7 @@ Public Const ODBCDriver As String = "MariaDB ODBC 3.1 Driver" 'Client PC에 설치�
 Public Const programv As String = "V20200227" '프로그램 버전 관리★★
 Public Const IPAddress As String = "123.123.123.123" 'DB IP Address★★
 Public Const commonDB As String = "common" 'Common DB명★★
-Public Const commpnID As String = "common" 'Common DB UN★★
+Public Const commonID As String = "common" 'Common DB UN★★
 Public Const commonPW As String = "password" 'Common DB 비밀번호★★
 Public conn As ADODB.Connection 'ADO Connection 개체 변수
 Public rs As New ADODB.Recordset 'ADO Recordset 개체 변수
@@ -24,7 +24,7 @@ Public today As Date '콤보박스의 날짜 옵션이 비었을 경우 오늘 날짜로 조회
 '    - TaskDB접속 정보 반환
 '-------------------------------
 Sub connectCommonDB()
-    connectDB IPAddress, commonDB, commpnID, commonPW
+    connectDB IPAddress, commonDB, commonID, commonPW
 End Sub
 
 '-------------------
@@ -114,9 +114,9 @@ Public Function PText(argString As Variant) As String
     End If
 End Function
 
-'---------------------------------------------
+'------------------------------------------------
 '  SQL 스칼라매칭 검색어 처리('검색어')
-'---------------------------------------------
+'------------------------------------------------
 Public Function SText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
         SText = "''"
