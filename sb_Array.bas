@@ -74,7 +74,7 @@ Sub aryData3()
     aryData = rngDB.Value
     
     '//¹è¿­À» ¿¢¼¿¿¡ ¹ÝÈ¯
-    ActiveSheet.Cells(20, 1).Resize(10, 10).Value = aryData
+    ActiveSheet.Cells(20, 1).Resize(cntR, cntC).Value = aryData
     
 End Sub
 
