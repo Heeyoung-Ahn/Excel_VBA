@@ -19,6 +19,7 @@ Sub AdvancedFilter()
     '//고급필터 영역 범위 설정
     Set rngDB = Sheets(1).Range("A1").CurrentRegion '목록범위(데이터 영역) 설정
     Set rngCriteria = Application.InputBox("조건범위를 선택한 후 확인 버튼을 누르세요!", "조건범위 선택", Type:=8) '조건범위 InputBox로 반환
+    '#InputBox 함수와 InputBox Method의 차이점은 반환하는 데이터형의 Type 지정 가능여부
     Set rngCopy = Sheets(2).Range("A1").CurrentRegion '복사위치 설정
     
     '//고급필터 실행
@@ -31,6 +32,7 @@ Sub AdvancedFilter()
     '//정렬
     Sheets(2).Activate
     ActiveSheet.AutoFilterMode = False '시트전체의 자동필터 해제
+    '# AutoFilterMode: AutoFilter 장착여부, FilterMode: AutoFilter가 장착된 상태에서 필터링여부
     rngCopy.Cells(1, 1).AutoFilter '복사영역에 자동필터 적용
     With ActiveSheet.AutoFilter.Sort
         .SortFields.Clear
