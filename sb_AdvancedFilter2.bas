@@ -57,5 +57,5 @@ Sub AF3()
         Set rngCopy = .Range("N1").CurrentRegion.Resize(1)
     End With
     
-    rngDB.AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=rngCriteria, copytorange:=rngCopy, Unique:=False
+    rngDB.AdvancedFilter xlFilterCopy, rngCriteria, rngCopy, False '인수의 순서대로 작성 시 인수명 생략 가능
 End Sub
