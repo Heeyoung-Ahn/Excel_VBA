@@ -12,14 +12,14 @@ Sub writeLog(ProcedureNM As String, tableNM As String, SQLScript As String, Erro
     Dim strSQL As String
     connectCommonDB
     
-    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, sql_script, error_cd, form_nm, job_nm, affectedCount, user_id) " & _
+    strSQL = "INSERT INTO common.logs(procedure_nm, table_nm, form_nm, job_nm, error_cd, affectedCount, sql_script, user_id) " & _
                   "Values(" & SText(ProcedureNM) & ", " & _
                                     SText(tableNM) & ", " & _
-                                    SText(SQLScript) & ", " & _
-                                    ErrorCD & ", " & _
                                     SText(formNM) & ", " & _
                                     SText(JobNM) & ", " & _
+                                    ErrorCD & ", " & _
                                     affectedCount & ", " & _
+                                    SText(SQLScript) & ", " & _
                                     user_id & ");"
 
     executeSQL "writeLog", "common.logs", strSQL, , "로그기록"
