@@ -110,20 +110,18 @@ Public Function PText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
         PText = "'%%'"
     Else
-        'PText = "'%" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "%'"
-        PText = "'%" & Trim(Replace(Replace(argString, "%", "%"), "'", "''")) & "%'"
+        PText = "'%" & Trim(argString) & "%'"
     End If
 End Function
 
-'------------------------------------------------
+'---------------------------------------------
 '  SQL 스칼라매칭 검색어 처리('검색어')
-'------------------------------------------------
+'---------------------------------------------
 Public Function SText(argString As Variant) As String
     If argString = "" Or Len(argString) = 0 Then
         SText = "''"
     Else
-        'SText = "'" & Trim(Replace(Replace(argString, "%", "\%"), "'", "''")) & "'"
-        SText = "'" & Trim(Replace(Replace(argString, "%", "%"), "'", "''")) & "'"
+        SText = "'" & Trim(argString) & "'"
     End If
 End Function
 
