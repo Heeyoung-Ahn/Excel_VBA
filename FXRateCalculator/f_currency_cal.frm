@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} f_currency_cal 
    Caption         =   "환율조회기"
-   ClientHeight    =   5175
+   ClientHeight    =   5265
    ClientLeft      =   45
    ClientTop       =   405
    ClientWidth     =   8640
@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 Dim cntlst1Col As Integer '//리스트 컬럼 수
 Dim TB1 As String '//폼에 연결된 DB 테이블
@@ -40,7 +41,7 @@ Private Sub UserForm_Initialize()
     Me.cmd_close.Cancel = True
     
     '//폼에 연결된 object 정보
-    TB1 = "fx_calculator.currency_cal"
+    TB1 = "overseas.currency_cal"
     
     With txtC3
         .Locked = True
@@ -87,9 +88,47 @@ Private Sub lst1_Click()
     With Me '//화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율
         .cbo_FX = .lst1.Column(0, .lst1.ListIndex)
         .txt_date = lst1.Column(2, lst1.ListIndex)
-        .txt_krw = Format(.lst1.Column(3, .lst1.ListIndex), "#,##0.000")
-        .txt_usd = Format(.lst1.Column(4, .lst1.ListIndex), "#,##0.000000")
+        Call adjust_decimal(.txt_krw, Round(.lst1.Column(3, .lst1.ListIndex), 10)) 'decimal을 10자리까지로 짤라서 진행
+        Call adjust_decimal(.txt_usd, Round(.lst1.Column(4, .lst1.ListIndex), 10)) 'decimal을 10자리까지로 짤라서 진행
     End With
+End Sub
+
+'-----------------------------------------
+'  소수점 자리수 동적 변환
+'-----------------------------------------
+Private Sub adjust_decimal(argTB As MSForms.TextBox, argValue As Double)
+    Dim noA As Integer '전체 글자수
+    Dim noB As Integer '마지막 '0'값의 위치
+    Dim noC As Integer '소수점 자리수
+    
+    noA = Len(Format(argValue, "@")) '숫자의 경우 len함수가 안먹어서 문자형으로 변환하여 연산
+    noB = InStrRev(argValue, "0")
+    If InStr(argValue, ".") = 0 Then
+        noC = 0
+        argTB.Value = Format(argValue, "#,##0")
+    Else
+        noC = noA - InStr(argValue, ".")
+        Do While noA = noB
+            argValue = Left(argValue, noB - 1)
+            
+            noA = Len(Format(argValue, "@"))
+            noB = InStrRev(argValue, "0")
+        Loop
+        noC = noA - InStr(argValue, ".")
+        Select Case noC
+            Case 10: argTB.Value = Format(argValue, "#,##0.0000000000")
+            Case 9: argTB.Value = Format(argValue, "#,##0.000000000")
+            Case 8: argTB.Value = Format(argValue, "#,##0.00000000")
+            Case 7: argTB.Value = Format(argValue, "#,##0.0000000")
+            Case 6: argTB.Value = Format(argValue, "#,##0.000000")
+            Case 5: argTB.Value = Format(argValue, "#,##0.00000")
+            Case 4: argTB.Value = Format(argValue, "#,##0.0000")
+            Case 3: argTB.Value = Format(argValue, "#,##0.000")
+            Case 2: argTB.Value = Format(argValue, "#,##0.00")
+            Case 1: argTB.Value = Format(argValue, "#,##0.0")
+            Case 0: argTB.Value = Format(argValue, "#,##0")
+        End Select
+    End If
 End Sub
 
 '--------------
@@ -142,26 +181,9 @@ Private Sub loadDataToList(argListBox As MSForms.ListBox, Optional ByVal queryKe
     connectTaskDB
     callDBtoRS "loadDataToList", TB1, strSQL, Me.Name
     
-    '//레코드셋의 데이터를 listData 배열에 반환
-    If Not rs.EOF Then
-        ReDim listData(0 To rs.RecordCount - 1, 0 To rs.Fields.Count - 1) '//DB에서 반환할 배열의 크기 지정: 레코드셋의 레코드 수, 필드 수
-        rs.MoveFirst
-        For i = 0 To rs.RecordCount - 1
-            For j = 0 To rs.Fields.Count - 1
-                If IsNull(rs.Fields(j).Value) = True Then
-                    listData(i, j) = ""
-                Else
-                    listData(i, j) = rs.Fields(j).Value
-                End If
-            Next j
-            rs.MoveNext
-        Next i
-    End If
-    disconnectALL
-    
     '//리스팅할 레코드 수 검토
     On Error Resume Next
-        cntRecord = UBound(listData) - LBound(listData) + 1 '//조회된 데이터 수
+        cntRecord = rs.RecordCount '//조회된 데이터 수
     On Error GoTo 0
     If cntRecord = 0 Then
         MsgBox "화폐리스트에 반환할 DB 데이터가 없습니다.", vbInformation, banner
@@ -170,7 +192,7 @@ Private Sub loadDataToList(argListBox As MSForms.ListBox, Optional ByVal queryKe
     End If
     
     '//listData 배열로 반환된 Data를 리스트박스에 리스팅
-    argListBox.List = listData
+    Me.lst1.Column = rs.GetRows
     
     '//리스트 조회 후에는 선택 없음, 수정 및 추가시에서 수정/추가된 항목으로 이동
     If queryKey = Empty Then
@@ -188,7 +210,7 @@ End Sub
 Private Function makeSelectSQL(Optional ByVal argSTxt As String, Optional ByVal argFTxt As String) As String
     Dim strSQL As String
     '//화폐id, 화폐약칭, 조회일, 원화환율, 달러화환율
-    strSQL = "SELECT a.currency_id, a.currency_un, a.refer_dt, a.fx_rate_krw, a.fx_rate_usd " & _
+    strSQL = "SELECT a.currency_id, a.currency_un, a.refer_dt, round(a.fx_rate_krw, 8), round(a.fx_rate_usd, 8) " & _
                   "FROM " & TB1 & " a WHERE a.user_id = " & user_id & ";"
     makeSelectSQL = strSQL
 End Function
@@ -234,7 +256,7 @@ Private Sub data_save()
     '//중복입력 체크
     If Me.lst1.ListIndex = -1 Then
         dataType = caseSave
-    ElseIf Me.lst1.Column(0, Me.lst1.ListIndex) <> cbo_FX.Column(0, cbo_FX.ListIndex) And caseSave = 2 Then '선택한 리스트와 수정하려는 항목이 다를 경우 신규데이터로 검증
+    ElseIf CInt(Me.lst1.Column(0, Me.lst1.ListIndex)) <> CInt(cbo_FX.Column(0, cbo_FX.ListIndex)) And caseSave = 2 Then '선택한 리스트와 수정하려는 항목이 다를 경우 신규데이터로 검증
         dataType = 1
     Else
         dataType = caseSave
@@ -389,6 +411,9 @@ End Sub
 '----------------------
 '  환율 조회
 '----------------------
+Private Sub cbo2_Change()
+    Call cmd_refer_Click
+End Sub
 Private Sub cmd_refer_Click()
     '//입력 검증
     If txtC1 = Empty Then
