@@ -1,6 +1,22 @@
-CREATE DATABASE IF NOT EXISTS `fx_calculator`;
+-- --------------------------------------------------------
+-- Host:                         172.17.110.91
+-- Server version:               10.4.7-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.0.0.5919
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dumping database structure for fx_calculator
+CREATE DATABASE IF NOT EXISTS `fx_calculator` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `fx_calculator`;
 
+-- Dumping structure for table fx_calculator.currencies
 CREATE TABLE IF NOT EXISTS `currencies` (
   `currency_id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
   `currency_un` varchar(3) NOT NULL,
@@ -11,6 +27,8 @@ CREATE TABLE IF NOT EXISTS `currencies` (
   PRIMARY KEY (`currency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8 COMMENT='화폐 목록';
 
+-- Dumping data for table fx_calculator.currencies: ~161 rows (approximately)
+/*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
 INSERT INTO `currencies` (`currency_id`, `currency_un`, `currency_nm`, `currency_cmt`, `sort_order`, `suspended`) VALUES
 	(1, 'AED', 'Emirati Dirham', '', 10, 0),
 	(2, 'AFN', 'Afghan Afghani', '', 20, 0),
@@ -173,14 +191,24 @@ INSERT INTO `currencies` (`currency_id`, `currency_un`, `currency_nm`, `currency
 	(159, 'YER', 'Yemeni Rial', '', 1590, 0),
 	(160, 'ZAR', 'South African Rand', '', 1600, 0),
 	(161, 'ZMW', 'Zambian Kwacha', '', 1610, 0);
+/*!40000 ALTER TABLE `currencies` ENABLE KEYS */;
 
+-- Dumping structure for table fx_calculator.currency_cal
 CREATE TABLE IF NOT EXISTS `currency_cal` (
   `currency_id` smallint(3) unsigned NOT NULL,
   `currency_un` varchar(3) NOT NULL,
   `refer_dt` date NOT NULL,
-  `fx_rate_krw` double unsigned NOT NULL,
-  `fx_rate_usd` double unsigned NOT NULL,
+  `fx_rate_krw` double(22,10) NOT NULL,
+  `fx_rate_usd` double(22,20) NOT NULL,
   `user_id` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`currency_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='화폐 목록';
+
+-- Dumping data for table fx_calculator.currency_cal: ~0 rows (approximately)
+/*!40000 ALTER TABLE `currency_cal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `currency_cal` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
