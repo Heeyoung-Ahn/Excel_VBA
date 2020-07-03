@@ -181,6 +181,5 @@ CREATE TABLE IF NOT EXISTS `currency_cal` (
   `fx_rate_krw` double(22,10) NOT NULL,
   `fx_rate_usd` double(22,20) NOT NULL,
   `user_id` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`currency_id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`currency_id`, `user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='화폐 목록';
