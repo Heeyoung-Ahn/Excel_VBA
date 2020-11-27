@@ -71,27 +71,28 @@ Sub UpdateFromCommonFile()
     Dim oldFieldNM() As String, newFieldNM() As String
 
     '//변수 정의
-    rawF = "*사원리스트.xls*" '원본파일 이름 설정 ★★
     rawS = "사원" '원본시트 이름 설정 ★★
     tskF = ThisWorkbook.Name '작업파일 이름 설정
     tskS = "RawData" '작업시트 이름 설정 ★★
        
     '//공통기초자료 폴더에서 업데이트 대상 파일을 찾아서 rawF에 설정
-    On Error Resume Next
     For i = 1 To 24
-        rawP = Chr(66 + i) & ":\00 공통기초자료\" '업데이트 대상 자료의 폴더 설정 ★★
-        rawF = Dir(rawP & "*" & rawF) '원본파일 경로포함 이름
-        If Left(rawF, 1) = "~" Then
-            MsgBox MName & " 파일을 다른 누군가가 열고 있습니다.   " & vbNewLine & _
-                "확인 후 다시 진행해 주세요.", vbInformation, banner
-            Exit Sub
+        If Chr(66 + i) <> "E" Then 'E 드라이브에서는 오류 발생하여 회피
+            rawP = Chr(66 + i) & ":\00 공통기초자료\" '업데이트 대상 자료의 폴더 설정 ★★
+            '원본파일 변수정의
+            rawF = "*사원리스트.xls*" '원본파일 이름 설정 ★★ / rawF를 못찾으면 초기화되어 다시 설정
+            rawF = Dir(rawP & "*" & rawF) '원본파일 경로포함 이름
+            If Left(rawF, 1) = "~" Then
+                MsgBox MName & " 파일을 다른 누군가가 열고 있습니다.   " & vbNewLine & _
+                    "확인 후 다시 진행해 주세요.", vbInformation, banner
+                Exit Sub
+            End If
+            If rawF <> Empty Then GoTo n:
         End If
-        If rawF <> Empty Then GoTo n:
     Next
     MsgBox MName & " 파일이 업데이트하려는 폴더에 없습니다." & vbNewLine & _
         "확인 후 다시 진행해 주세요.", vbInformation, banner
     Exit Sub
-    On Error GoTo 0
 n:
 
     '//매크로 최적화
