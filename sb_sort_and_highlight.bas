@@ -64,6 +64,7 @@ Sub sort_plan()
                 .Header = xlYes
                 .Apply
             End With
+            Call highlight_plan '조건부서식 적용
         Case 2 '코드로 정렬
             ActiveSheet.AutoFilterMode = False
             rngPlan.Select
@@ -74,10 +75,9 @@ Sub sort_plan()
                 .Header = xlYes
                 .Apply
             End With
+            Call initialize_highlight_plan '조건부서식 해제
     End Select
     Cells(2, 1).Activate
-    
-    Call highlight_plan
 
     '//매크로최적화원복
     With Application
