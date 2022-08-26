@@ -109,7 +109,7 @@ nextFile:
     '//Âî²¨±â Á¦°Å
     Set rngDB = Range("A1").CurrentRegion
     cntR = rngDB.Rows.Count
-    Cells(Rows.Count, 1).End(xlUp).Offset(1).Resize(Rows.Count - cntR).Delete shift:=xlUp
+    Cells(Rows.Count, 1).End(xlUp).Offset(1).Resize(Rows.Count - cntR, Columns.Count).Delete shift:=xlUp
     
     Application.ScreenUpdating = True
     
